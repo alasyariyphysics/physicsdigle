@@ -1,9 +1,67 @@
+/* ---------------------------------- */
+/* 1. BASE RESET & FONT               */
+/* ---------------------------------- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9; 
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ---------------------------------- */
+/* 2. HEADER DAN LINK KEMBALAI         */
+/* ---------------------------------- */
+.header {
+    background-color: #3f51b5; /* Biru Utama */
+    padding: 10px 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.back-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: #ffc107; /* Aksen Kuning */
+}
+
+/* ---------------------------------- */
+/* 3. TATA LETAK UTAMA (WRAPPER)      */
+/* ---------------------------------- */
+#wrapper {
+    display: flex;
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+/* ---------------------------------- */
+/* 4. SIDEBAR PROYEK FISIKA           */
+/* ---------------------------------- */
+#project-sidebar {
+    width: 250px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    min-height: calc(100vh - 40px); /* Menyesuaikan tinggi dengan header dan footer */
+    height: auto;
+    position: sticky; 
+    top: 0;
+}
+
 /* TOMBOL HOME di atas Sidebar */
 .sidebar-home-button {
     display: block;
     text-align: center;
-    background-color: #ffc107; /* Warna Aksen */
-    color: #3f51b5; /* Teks Biru */
+    background-color: #ffc107; 
+    color: #3f51b5; 
     padding: 10px;
     margin-bottom: 20px;
     text-decoration: none;
@@ -16,20 +74,106 @@
     background-color: #ffd740;
 }
 
-/* STYLING SUB-MENU (Untuk Introduction) */
+#project-sidebar h2 {
+    color: #3f51b5;
+    border-bottom: 2px solid #ffc107;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    font-size: 1.3em;
+}
+
+#project-sidebar nav ul {
+    list-style: none; /* MENGHILANGKAN TITIK HITAM */
+    padding: 0;
+}
+
+#project-sidebar nav ul li a {
+    display: block;
+    padding: 8px 10px;
+    text-decoration: none;
+    color: #555;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer; /* Menandakan link bisa diklik/interaktif */
+}
+
+#project-sidebar nav ul li a:hover {
+    background-color: #e8e8f8;
+    color: #3f51b5;
+    border-left: 3px solid #3f51b5;
+}
+
+/* Style untuk link aktif */
+#project-sidebar nav ul li a.active {
+    background-color: #e8e8f8;
+    color: #3f51b5;
+    font-weight: bold;
+    border-left: 3px solid #ffc107;
+}
+
+/* STYLING SUB-MENU */
 .sub-menu {
-    list-style: none;
+    list-style: none; 
     padding-left: 15px;
     margin: 5px 0;
-    border-left: 2px solid #ccc; /* Garis vertikal penanda sub-level */
+    border-left: 2px solid #ccc; 
+    
+    /* PENTING: Sembunyikan sub-menu secara default (dikelola oleh JS) */
+    display: none; 
+}
+
+/* Tampilkan sub-menu hanya jika memiliki class 'open' */
+.sub-menu.open {
+    display: block; 
 }
 
 .sub-menu li a {
     font-size: 0.9em;
-    padding: 5px 5px 5px 10px !important; /* Override padding utama */
+    padding: 5px 5px 5px 10px !important;
+    color: #777; 
 }
 
-/* Kelas untuk menu yang terbuka */
-.sub-menu.open {
-    display: block; 
+.sub-menu li a:hover {
+    background-color: #f0f0f0;
+    border-left: 3px solid #3f51b5;
+}
+
+/* ---------------------------------- */
+/* 5. KONTEN UTAMA PROYEK             */
+/* ---------------------------------- */
+#project-content {
+    flex-grow: 1;
+    padding: 20px 40px;
+}
+
+#project-content h1 {
+    color: #3f51b5;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.subtitle {
+    font-style: italic;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 30px;
+}
+
+.overview {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+/* ---------------------------------- */
+/* 6. FOOTER                          */
+/* ---------------------------------- */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    color: #666;
+    font-size: 0.8em;
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
 }
