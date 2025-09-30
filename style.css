@@ -1,0 +1,35 @@
+/* TOMBOL HOME di atas Sidebar */
+.sidebar-home-button {
+    display: block;
+    text-align: center;
+    background-color: #ffc107; /* Warna Aksen */
+    color: #3f51b5; /* Teks Biru */
+    padding: 10px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.sidebar-home-button:hover {
+    background-color: #ffd740;
+}
+
+/* STYLING SUB-MENU (Untuk Introduction) */
+.sub-menu {
+    list-style: none;
+    padding-left: 15px;
+    margin: 5px 0;
+    border-left: 2px solid #ccc; /* Garis vertikal penanda sub-level */
+}
+
+.sub-menu li a {
+    font-size: 0.9em;
+    padding: 5px 5px 5px 10px !important; /* Override padding utama */
+}
+
+/* Kelas untuk menu yang terbuka */
+.sub-menu.open {
+    display: block; 
+}
