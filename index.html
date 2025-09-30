@@ -24,6 +24,7 @@
                             <li><a href="introduction-science.html">The Nature of Science</a></li>
                         </ul>
                     </li>
+                    
                     <li><a href="#">Math for Physics</a></li>
                     <li><a href="simulasi-mekanika.html">Kinematics</a></li>
                     <li><a href="#">Translational Mechanics</a></li>
@@ -47,8 +48,8 @@
 
             <section class="overview">
                 <h2>Selamat Datang</h2>
-                <p>Fisika adalah ilmu eksperimental. Untuk memahami dan menggambarkan fenomena alam, kita harus terlebih dahulu menetapkan bahasa yang tepat: besaran, satuan, dan pengukuran. Gunakan *sidebar* untuk menjelajahi topik fundamental ini.</p>
-                <p>Klik **"Units and Quantity"** di *sidebar* untuk memulai.</p>
+                <p>Proyek *Physics Digital Learning* ini adalah sumber daya interaktif Anda untuk menguasai konsep-konsep fisika, dari dasar hingga modern, melalui visualisasi dan simulasi langsung. Fisika adalah ilmu eksperimental. Untuk memahami dan menggambarkan fenomena alam, kita harus terlebih dahulu menetapkan bahasa yang tepat: besaran, satuan, dan pengukuran.</p>
+                <p>Silakan klik **"Units and Quantity"** di *sidebar* untuk memulai topik fundamental ini.</p>
             </section>
         </main>
     </div>
@@ -56,14 +57,31 @@
     <footer>
         <p>&copy; 2025 Alasyariy Physics Digital Learning</p>
     </footer>
-    
+
     <script>
-        document.querySelector('.sidebar-home-button').addEventListener('click', function(e) {
-            // Jika diklik di halaman index.html, hanya scroll ke atas
-            if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/physicsdigle/')) {
-                e.preventDefault();
-                window.scrollTo(0, 0);
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Memilih semua link dengan class 'collapsible' (yaitu Introduction)
+            const collapsibleLinks = document.querySelectorAll('.collapsible');
+
+            collapsibleLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    // Mencegah navigasi default link (karena link bertindak sebagai tombol toggle)
+                    event.preventDefault(); 
+                    
+                    // Mendapatkan <li> induk dari link yang diklik
+                    const parentLi = link.closest('li');
+                    // Mencari sub-menu (<ul>) di dalam <li> induk tersebut
+                    const subMenu = parentLi.querySelector('.sub-menu');
+
+                    if (subMenu) {
+                        // Toggle class 'open' untuk menampilkan/menyembunyikan sub-menu (dikelola oleh CSS)
+                        subMenu.classList.toggle('open');
+                        
+                        // Toggle class 'active' pada link utama untuk indikator visual
+                        link.classList.toggle('active'); 
+                    }
+                });
+            });
         });
     </script>
 </body>
