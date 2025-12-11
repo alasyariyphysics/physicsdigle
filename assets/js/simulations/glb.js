@@ -1,29 +1,22 @@
-let x = 0;
-let v = 2; 
+// File: assets/js/simulations/glb.js (Contoh Modifikasi)
 
-function setup() {
-  // Membuat kanvas ukuran 600x200
-  // .parent('canvas-holder') memasukkannya ke dalam div di HTML
-  let canvas = createCanvas(600, 200);
-  canvas.parent('canvas-holder');
-}
+let glider = (p) => { // 'p' adalah instance p5
+  let x = 0;
+  let v = 2;
 
-function draw() {
-  background(220); // Latar belakang abu-abu
-  
-  // Fisika sederhana
-  x = x + v;
-  
-  // Reset jika keluar layar
-  if (x > width) {
-    x = 0;
-  }
-  
-  // Gambar Bola
-  fill('blue');
-  circle(x, height/2, 30);
-  
-  // Update teks di HTML (DOM manipulation)
-  // select('#id') adalah fitur p5.js untuk mengambil elemen HTML
-  select('#info-posisi').html(Math.floor(x));
-}
+  p.setup = () => {
+    let canvas = p.createCanvas(600, 200);
+    canvas.parent('canvas-holder');
+  };
+
+  p.draw = () => {
+    p.background(220);
+    x = x + v;
+    if (x > p.width) { x = 0; }
+    p.fill('blue');
+    p.circle(x, p.height/2, 30);
+    p.select('#info-posisi').html(Math.floor(x));
+  };
+};
+
+let myGlider = new p5(glider); // Membuat instance p5 untuk simulasi GLB
