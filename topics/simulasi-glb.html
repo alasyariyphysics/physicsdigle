@@ -7,25 +7,24 @@ title: Simulasi GLB & Whiteboard
 
 <section>
     <h2>Simulasi GLB</h2>
-    <p>Pergerakan benda dengan kecepatan konstan.</p>
     
     <div class="simulation-container">
+        <div class="controls">
+            <label>Kecepatan (m/s): 
+                <input type="range" id="speedInput" min="0.5" max="5" value="2" step="0.5" oninput="updateSpeed(this.value)">
+                <span id="speedDisplay">2.0</span> m/s
+            </label>
+            <button id="pauseButton" onclick="togglePause()">Pause</button>
+        </div>
+
+        <p>Waktu Berjalan: <span id="timeDisplay">0.00</span> s</p>
+
         <div id="glb-canvas-holder"></div>
-        <p>Posisi Benda: <span id="info-posisi">0</span> m</p>
+        <p>Posisi Benda: <span id="info-posisi">0.00</span> m</p>
     </div>
 </section>
 
 <hr>
-
-<section>
-    <h2>Whiteboard Interaktif</h2>
-    <p>Gunakan mouse untuk menggambar atau mencatat di kanvas. Klik "Clear" untuk menghapus.</p>
-
-    <div class="simulation-container">
-        <div id="whiteboard-canvas-holder"></div>
-        <button onclick="clearWhiteboard()">Clear Whiteboard</button>
-    </div>
-</section>
 
 <script src="{{ site.baseurl }}/assets/js/simulations/glb.js"></script>
 <script src="{{ site.baseurl }}/assets/js/simulations/whiteboard.js"></script>
