@@ -1,0 +1,33 @@
+/* Reset sederhana */
+body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+
+/* Layout Utama */
+#wrapper { display: flex; flex: 1; }
+
+/* Sidebar */
+#project-sidebar {
+  width: 250px;
+  background: #f4f4f4;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+#project-sidebar ul { list-style: none; padding: 0; }
+#project-sidebar li { margin-bottom: 10px; }
+#project-sidebar a { text-decoration: none; color: #333; display: block; padding: 5px; }
+#project-sidebar a:hover { color: #007bff; }
+
+/* Submenu (sembunyi dulu) */
+.sub-menu { display: none; padding-left: 20px; }
+.sub-menu.open { display: block; }
+
+/* Konten Utama */
+#project-content { flex: 1; padding: 40px; }
+
+/* Wadah Simulasi */
+.simulation-container {
+  border: 2px solid #333;
+  padding: 10px;
+  margin-top: 20px;
+  display: inline-block;
+  background: #fafafa;
+}
