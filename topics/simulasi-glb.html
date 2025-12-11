@@ -1,16 +1,31 @@
 ---
 layout: default
-title: Simulasi GLB
+title: Simulasi GLB & Whiteboard
 ---
 
 <h1>Kinematika: Gerak Lurus Beraturan</h1>
-<p>Simulasi ini menunjukkan bagaimana posisi berubah terhadap waktu jika kecepatan konstan.</p>
 
-<p>Rumus: $$ x = x_0 + v \cdot t $$</p>
+<section>
+    <h2>Simulasi GLB</h2>
+    <p>Pergerakan benda dengan kecepatan konstan.</p>
+    
+    <div class="simulation-container">
+        <div id="glb-canvas-holder"></div>
+        <p>Posisi Benda: <span id="info-posisi">0</span> m</p>
+    </div>
+</section>
 
-<div class="simulation-container">
-  <div id="canvas-holder"></div>
-  <p>Posisi Bola: <span id="info-posisi">0</span> m</p>
-</div>
+<hr>
+
+<section>
+    <h2>Whiteboard Interaktif</h2>
+    <p>Gunakan mouse untuk menggambar atau mencatat di kanvas. Klik "Clear" untuk menghapus.</p>
+
+    <div class="simulation-container">
+        <div id="whiteboard-canvas-holder"></div>
+        <button onclick="clearWhiteboard()">Clear Whiteboard</button>
+    </div>
+</section>
 
 <script src="{{ site.baseurl }}/assets/js/simulations/glb.js"></script>
+<script src="{{ site.baseurl }}/assets/js/simulations/whiteboard.js"></script>
