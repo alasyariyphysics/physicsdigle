@@ -1,22 +1,38 @@
-// File: assets/js/simulations/glb.js (Contoh Modifikasi)
+// File: assets/js/simulations/glb.js
 
-let glider = (p) => { // 'p' adalah instance p5
+// Membuat fungsi instance p5.js untuk GLB
+let glider = (p) => { 
   let x = 0;
-  let v = 2;
+  let v = 2; // Kecepatan
+  let canvasWidth = 600;
+  let canvasHeight = 200;
 
   p.setup = () => {
-    let canvas = p.createCanvas(600, 200);
-    canvas.parent('canvas-holder');
+    // Memasukkan kanvas ke div id="glb-canvas-holder"
+    let canvas = p.createCanvas(canvasWidth, canvasHeight);
+    canvas.parent('glb-canvas-holder');
   };
 
   p.draw = () => {
-    p.background(220);
+    p.background(220); // Latar belakang abu-abu
+    
+    // FISIKA: Update Posisi
     x = x + v;
-    if (x > p.width) { x = 0; }
+    
+    // Boundary check (Looping)
+    if (x > p.width) {
+      x = 0;
+    }
+    
+    // GAMBAR: Benda (Lingkaran)
     p.fill('blue');
-    p.circle(x, p.height/2, 30);
+    p.noStroke();
+    p.circle(x, p.height / 2, 30);
+    
+    // Update teks di HTML
     p.select('#info-posisi').html(Math.floor(x));
   };
 };
 
-let myGlider = new p5(glider); // Membuat instance p5 untuk simulasi GLB
+// Menginisialisasi instance GLB
+let myGlider = new p5(glider);
