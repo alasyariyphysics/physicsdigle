@@ -1,0 +1,6 @@
+title: Physics Digital Learning
+description: Belajar Fisika Interaktif dengan Simulasi
+baseurl: "/physicsdigle" # GANTI dengan nama repository GitHub kamu nantinya
+url: "https://alasyariyphysics.github.io" # GANTI dengan username GitHub kamu
+markdown: kramdown
+theme: jekyll-theme-primer # Tema dasar agar terlihat rapi (opsional)
