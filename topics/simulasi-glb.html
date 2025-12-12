@@ -10,14 +10,24 @@ title: Simulasi GLB & Whiteboard
     
     <div class="simulation-container">
         <div class="controls">
-            <label>V Objek 1 (Merah, m/s): 
-                <input type="range" id="speedInput" min="0.5" max="5" value="2" step="0.5" oninput="updateSpeed(this.value)">
-                <span id="speedDisplay">2.0</span> m/s
-            </label>
-            
             <button id="pauseButton" onclick="togglePause()">Pause</button>
             <button id="resetButton" onclick="resetSimulation()">Reset</button> 
         </div>
+
+        <div class="input-control">
+            <label>V Objek 1 (Merah, m/s): 
+                <input type="range" id="speedInput1" min="0.5" max="5" value="2" step="0.5" oninput="updateSpeed(1, this.value)">
+                <span id="speedDisplay1">2.0</span> m/s
+            </label>
+        </div>
+
+        <div class="input-control">
+            <label>V Objek 2 (Biru, m/s): 
+                <input type="range" id="speedInput2" min="0.5" max="5" value="1.2" step="0.5" oninput="updateSpeed(2, this.value)">
+                <span id="speedDisplay2">1.2</span> m/s
+            </label>
+        </div>
+
 
         <p>Waktu Berjalan: <span id="timeDisplay">0.00</span> s</p>
 
