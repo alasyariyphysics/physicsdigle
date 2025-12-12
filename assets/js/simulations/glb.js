@@ -32,13 +32,27 @@ let glider = (p) => {
               }
           }
           
-          // Boundary check (Looping)
-          if (this.x > p.width) {
-              this.x = 0;
-              this.trace = [];
-              return true; // Menandakan reset terjadi
+          // Boundary Check
+          let shouldReset = false;
+
+          if (this.v > 0) {
+              // Gerak Maju (Positif): Loop dari Kanan ke Kiri
+              if (this.x > p.width) {
+                  this.x = this.x - p.width; // Atur posisi di sisa kelebihan (agar lebih mulus)
+                  this.trace = [];
+                  shouldReset = true;
+              }
+          } else if (this.v < 0) {
+              // Gerak Mundur (Negatif): Loop dari Kiri ke Kanan
+              if (this.x < 0) {
+                  // Jika x < 0, hitung sisa jarak dan munculkan dari kanan
+                  this.x = p.width + this.x; // Contoh: width=600, x=-10. Maka, 600 + (-10) = 590
+                  this.trace = [];
+                  shouldReset = true;
+              }
           }
-          return false;
+         
+          return shouldReset;
       }
 
       draw() {
