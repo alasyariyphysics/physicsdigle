@@ -16,7 +16,7 @@ let glider = (p) => {
   
   // KONSTANTA FISIKA/VISUALISASI
   const SCALE_METER = 50; // 1 meter di simulasi = 50 piksel
-  const SIMULATION_SPEED_FACTOR = 0.05; // Faktor untuk memperlambat simulasi
+  const SIMULATION_SPEED_FACTOR = 0.4; // Faktor untuk memperlambat simulasi
   const Y_OFFSET_1 = 65; // Posisi Y Objek 1
   const Y_OFFSET_2 = 135; // Posisi Y Objek 2
 
