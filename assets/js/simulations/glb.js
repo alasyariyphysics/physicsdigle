@@ -8,7 +8,7 @@ let glider = (p) => {
   
   // KONSTANTA FISIKA/VISUALISASI
   const SCALE_METER = 50; // 1 meter di simulasi = 50 piksel
-  const SIMULATION_SPEED_FACTOR = 0.1; // Faktor untuk memperlambat simulasi agar lebih mudah dilihat
+  const SIMULATION_SPEED_FACTOR = 0.3; // Faktor untuk memperlambat simulasi agar lebih mudah dilihat
 
   p.setup = () => {
     let canvas = p.createCanvas(600, 200);
