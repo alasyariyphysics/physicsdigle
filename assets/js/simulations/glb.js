@@ -44,9 +44,9 @@ let glider = (p) => {
       draw() {
           // Gambar Jejak Lintasan
           p.noStroke();
-          p.fill(this.color); // Warna dengan transparansi
+          p.fill(this.color); // Menggunakan warna solid (Merah atau Biru)
           this.trace.forEach(point => {
-              p.ellipse(point.x, point.y, 4, 4);
+              p.ellipse(point.x, point.y, 6, 6); // UKURAN TITIK DITINGKATKAN menjadi 6x6
           });
           
           // Gambar Benda
