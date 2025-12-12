@@ -6,7 +6,7 @@ let glider = (p) => {
   
   // KONSTANTA FISIKA/VISUALISASI
   const SCALE_METER = 50; 
-  const SIMULATION_SPEED_FACTOR = 0.05; 
+  const SIMULATION_SPEED_FACTOR = 0.5; 
   const TRACE_LIMIT = 80;
 
   // FUNGSIONALITAS OBJEK GLB
@@ -44,7 +44,7 @@ let glider = (p) => {
       draw() {
           // Gambar Jejak Lintasan
           p.noStroke();
-          p.fill(this.color + '80'); // Warna dengan transparansi
+          p.fill(this.color); // Warna dengan transparansi
           this.trace.forEach(point => {
               p.ellipse(point.x, point.y, 4, 4);
           });
