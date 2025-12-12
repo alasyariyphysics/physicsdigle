@@ -1,30 +1,81 @@
 // File: assets/js/simulations/glb.js
 
 let glider = (p) => { 
-  // VARIABEL OBJEK 1 (Merah)
-  let x1 = 0;      // Posisi dalam piksel
-  let v1 = 2;      // Kecepatan dalam meter/detik
-  let trace1 = []; // Jejak lintasan
-
-  // VARIABEL OBJEK 2 (Biru) - Kecepatan tetap untuk perbandingan
-  let x2 = 0;
-  const v2 = 1.2; // Kecepatan Objek 2 (lebih lambat)
-  let trace2 = [];
-
   let time = 0;    // Waktu dalam detik
   let isPaused = false;
   
   // KONSTANTA FISIKA/VISUALISASI
-  const SCALE_METER = 50; // 1 meter di simulasi = 50 piksel
-  const SIMULATION_SPEED_FACTOR = 0.4; // Faktor untuk memperlambat simulasi
-  const Y_OFFSET_1 = 65; // Posisi Y Objek 1
-  const Y_OFFSET_2 = 135; // Posisi Y Objek 2
+  const SCALE_METER = 50; 
+  const SIMULATION_SPEED_FACTOR = 0.05; 
+  const TRACE_LIMIT = 80;
+
+  // FUNGSIONALITAS OBJEK GLB
+  // Membuat Constructor/Template Objek
+  class MovableObject {
+      constructor(id, initialV, yOffset, color) {
+          this.id = id; // 1 atau 2
+          this.x = 0;   // Posisi X (piksel)
+          this.v = initialV; // Kecepatan (m/s)
+          this.yOffset = yOffset; // Posisi Y di kanvas
+          this.color = color;
+          this.trace = [];
+      }
+
+      update(dt) {
+          this.x += this.v * dt * SCALE_METER;
+          
+          // Simpan jejak (trace)
+          if (p.frameCount % 5 === 0) { 
+              this.trace.push(p.createVector(this.x, this.yOffset));
+              if (this.trace.length > TRACE_LIMIT) {
+                  this.trace.shift();
+              }
+          }
+          
+          // Boundary check (Looping)
+          if (this.x > p.width) {
+              this.x = 0;
+              this.trace = [];
+              return true; // Menandakan reset terjadi
+          }
+          return false;
+      }
+
+      draw() {
+          // Gambar Jejak Lintasan
+          p.noStroke();
+          p.fill(this.color + '80'); // Warna dengan transparansi
+          this.trace.forEach(point => {
+              p.ellipse(point.x, point.y, 4, 4);
+          });
+          
+          // Gambar Benda
+          p.fill(this.color); 
+          p.noStroke();
+          p.circle(this.x, this.yOffset, 30);
+          
+          // Update Teks di HTML
+          p.select(`#pos${this.id}Display`).html(p.nf(this.x / SCALE_METER, 0, 2));
+      }
+
+      reset() {
+          this.x = 0;
+          this.trace = [];
+      }
+  }
+
+  // INISIALISASI DUA OBJEK
+  const object1 = new MovableObject(1, 2.0, 65, 'red'); // Objek 1 (Merah)
+  const object2 = new MovableObject(2, 1.2, 135, 'blue'); // Objek 2 (Biru)
+  let objects = [object1, object2];
 
   p.setup = () => {
     let canvas = p.createCanvas(600, 200);
     canvas.parent('glb-canvas-holder');
     p.frameRate(30); 
-    p.select('#speedDisplay').html(p.nf(v1, 0, 1)); // Set display awal
+    // Set display awal untuk kedua objek
+    p.select('#speedDisplay1').html(p.nf(object1.v, 0, 1)); 
+    p.select('#speedDisplay2').html(p.nf(object2.v, 0, 1)); 
   };
   
   // Fungsi internal untuk menggambar Grid (Skala)
@@ -44,19 +95,10 @@ let glider = (p) => {
       p.text(`${i} m`, xPos + 3, p.height - 3);
     }
     
-    // Garis horizontal (garis dasar)
+    // Garis horizontal untuk lintasan
     p.stroke(150);
-    p.line(0, Y_OFFSET_1, p.width, Y_OFFSET_1); 
-    p.line(0, Y_OFFSET_2, p.width, Y_OFFSET_2); 
-  };
-
-  // Fungsi internal untuk menggambar Jejak
-  p.drawTrace = (traceArray, color) => {
-      p.noStroke();
-      p.fill(color);
-      traceArray.forEach(point => {
-          p.ellipse(point.x, point.y, 4, 4); // Gambar titik kecil
-      });
+    p.line(0, object1.yOffset, p.width, object1.yOffset); 
+    p.line(0, object2.yOffset, p.width, object2.yOffset); 
   };
 
   p.draw = () => {
@@ -68,58 +110,28 @@ let glider = (p) => {
         let dt = (p.deltaTime / 1000) * SIMULATION_SPEED_FACTOR;
         time += dt; 
         
-        // 1. Update Posisi GLB Objek 1
-        x1 += v1 * dt * SCALE_METER;
+        let shouldResetTime = false;
+
+        // Iterasi dan Update kedua objek
+        objects.forEach(obj => {
+            if (obj.update(dt)) {
+                // Jika salah satu objek reset (mencapai batas), set flag
+                shouldResetTime = true;
+            }
+        });
         
-        // 2. Update Posisi GLB Objek 2
-        x2 += v2 * dt * SCALE_METER;
-
-        // Simpan posisi ke trace (setiap 5 frame)
-        if (p.frameCount % 5 === 0) { 
-            // Objek 1 (Merah)
-            trace1.push(p.createVector(x1, Y_OFFSET_1));
-            if (trace1.length > 80) { // Batasi panjang jejak
-                trace1.shift();
-            }
-            
-            // Objek 2 (Biru)
-            trace2.push(p.createVector(x2, Y_OFFSET_2)); 
-            if (trace2.length > 80) {
-                trace2.shift();
-            }
+        // Jika salah satu objek looping, reset waktu
+        if (shouldResetTime) {
+            time = 0;
         }
     }
     
-    // Boundary check (Looping)
-    const handleBoundary = (x_pos, trace_arr) => {
-        if (x_pos > p.width) {
-            return { x: 0, trace: [] }; // Reset posisi dan jejak
-        }
-        return { x: x_pos, trace: trace_arr };
-    };
-
-    let result1 = handleBoundary(x1, trace1);
-    x1 = result1.x; trace1 = result1.trace;
+    // Gambar kedua objek
+    objects.forEach(obj => {
+        obj.draw();
+    });
     
-    let result2 = handleBoundary(x2, trace2);
-    x2 = result2.x; trace2 = result2.trace;
-
-    // Jika Objek 1 direset, reset juga waktu
-    if (x1 === 0 && trace1.length === 0) {
-        time = 0;
-    }
-    
-    // 3. GAMBAR: Jejak Lintasan
-    p.drawTrace(trace1, 'rgba(255, 0, 0, 0.5)'); // Merah
-    p.drawTrace(trace2, 'rgba(0, 0, 255, 0.5)'); // Biru
-
-    // 4. GAMBAR: Benda (Lingkaran)
-    p.fill('red'); p.circle(x1, Y_OFFSET_1, 30);
-    p.fill('blue'); p.circle(x2, Y_OFFSET_2, 30);
-    
-    // 5. Update Teks di HTML
-    p.select('#pos1Display').html(p.nf(x1 / SCALE_METER, 0, 2)); 
-    p.select('#pos2Display').html(p.nf(x2 / SCALE_METER, 0, 2)); 
+    // Update Teks Waktu di HTML
     p.select('#timeDisplay').html(p.nf(time, 0, 2));
   };
   
@@ -136,18 +148,19 @@ let glider = (p) => {
     }
   };
   
-  p.updateSpeed = (newV) => {
-    v1 = p.float(newV);
-    p.select('#speedDisplay').html(p.nf(v1, 0, 1));
+  // Fungsi yang menerima ID objek (1 atau 2)
+  p.updateSpeed = (id, newV) => {
+    let targetObj = objects.find(obj => obj.id === id);
+    if (targetObj) {
+        targetObj.v = p.float(newV);
+        p.select(`#speedDisplay${id}`).html(p.nf(targetObj.v, 0, 1));
+    }
     if (!isPaused) p.loop(); 
   };
   
   p.resetSimulation = () => {
-    x1 = 0;
-    x2 = 0;
+    objects.forEach(obj => obj.reset()); // Reset posisi dan jejak kedua objek
     time = 0;
-    trace1 = [];
-    trace2 = [];
     isPaused = false;
     p.select('#pauseButton').html('Pause');
     p.loop(); 
@@ -162,8 +175,9 @@ window.togglePause = () => {
   if (myGlider.togglePause) myGlider.togglePause();
 };
 
-window.updateSpeed = (value) => {
-  if (myGlider.updateSpeed) myGlider.updateSpeed(value);
+// Fungsi updateSpeed sekarang menerima ID objek (1 atau 2)
+window.updateSpeed = (id, value) => {
+  if (myGlider.updateSpeed) myGlider.updateSpeed(id, value);
 };
 
 window.resetSimulation = () => {
