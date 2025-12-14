@@ -184,6 +184,36 @@ let glider = (p) => {
 // Menginisialisasi instance GLB
 let myGlider = new p5(glider);
 
+// --- FUNGSI GLOBAL UNTUK FULLSCREEN ---
+// Fungsi ini dipanggil oleh tombol Fullscreen di HTML
+window.toggleFullscreen = () => {
+    let canvas = myGlider.canvas;
+    
+    if (p5.prototype.getFullScreenElement()) {
+        // Jika sedang fullscreen, keluar
+        p5.prototype.fullscreen(false);
+    } else {
+        // Jika tidak fullscreen, masuk ke fullscreen (elemen yang difullscreen adalah wrapper simulasi)
+        // Kita targetkan div#simulation-wrapper agar semua kontrol ikut masuk fullscreen
+        let wrapper = document.getElementById('simulation-wrapper');
+        p5.prototype.fullscreen(true, wrapper); 
+    }
+}
+
+// Fungsi P5.js bawaan yang dipanggil saat ukuran jendela berubah (termasuk saat fullscreen)
+p5.prototype.windowResized = () => {
+    // Cek apakah mode fullscreen aktif
+    if (p5.prototype.getFullScreenElement()) {
+        // Jika fullscreen, atur ulang ukuran kanvas agar memenuhi layar
+        myGlider.resizeCanvas(window.innerWidth, window.innerHeight * 0.7); // 70% tinggi layar
+    } else {
+        // Jika kembali ke mode normal, kembalikan ukuran kanvas ke 600x200
+        myGlider.resizeCanvas(600, 200);
+        // PENTING: Refresh tampilan grid dan posisi
+        myGlider.drawGrid(); 
+    }
+}
+
 // Membuat fungsi global yang dipanggil dari tombol/input HTML
 window.togglePause = () => {
   if (myGlider.togglePause) myGlider.togglePause();

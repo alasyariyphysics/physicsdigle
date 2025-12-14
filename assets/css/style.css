@@ -31,3 +31,44 @@ body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column
   display: inline-block;
   background: #fafafa;
 }
+
+
+/* -------------------------------------- */
+/* FULLSCREEN & SIMULATION STYLING */
+/* -------------------------------------- */
+
+#simulation-wrapper {
+    position: relative; /* Penting agar tombol fullscreen bisa diposisikan absolut di dalamnya */
+    padding-top: 20px; /* Jarak agar tombol tidak menempel */
+}
+
+#fullscreenButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 100; /* Pastikan tombol di atas kanvas */
+    border-radius: 5px;
+}
+
+#fullscreenButton:hover {
+    background: #0056b3;
+}
+
+/* Style untuk elemen di dalam mode fullscreen (opsional) */
+:fullscreen #simulation-wrapper,
+:-webkit-full-screen #simulation-wrapper,
+:-moz-full-screen #simulation-wrapper {
+    background: #fff; /* Latar belakang putih saat fullscreen */
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
