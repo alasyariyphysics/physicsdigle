@@ -38,37 +38,50 @@ body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column
 /* -------------------------------------- */
 
 #simulation-wrapper {
-    position: relative; /* Penting agar tombol fullscreen bisa diposisikan absolut di dalamnya */
-    padding-top: 20px; /* Jarak agar tombol tidak menempel */
+    position: relative; 
+    padding-top: 20px; 
+    /* Tambahkan transisi agar perubahan ukuran terlihat mulus */
+    transition: width 0.3s, height 0.3s; 
 }
 
 #fullscreenButton {
+    /* ... (Tetap sama) ... */
     position: absolute;
     top: 0;
     right: 0;
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 14px;
-    z-index: 100; /* Pastikan tombol di atas kanvas */
-    border-radius: 5px;
+    /* ... */
 }
 
-#fullscreenButton:hover {
-    background: #0056b3;
-}
-
-/* Style untuk elemen di dalam mode fullscreen (opsional) */
-:fullscreen #simulation-wrapper,
-:-webkit-full-screen #simulation-wrapper,
-:-moz-full-screen #simulation-wrapper {
-    background: #fff; /* Latar belakang putih saat fullscreen */
+/* Gaya KHUSUS untuk Elemen Wrapper saat berada dalam mode Fullscreen */
+:fullscreen#simulation-wrapper,
+:-webkit-full-screen#simulation-wrapper,
+:-moz-full-screen#simulation-wrapper {
+    background: #fff; 
     width: 100vw;
     height: 100vh;
+    /* Gunakan Flexbox untuk memusatkan kontrol di tengah layar besar */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 0; /* Hapus padding agar memenuhi layar */
+}
+
+/* Gaya KHUSUS untuk Kontrol di dalam Fullscreen */
+:fullscreen #simulation-wrapper .controls,
+:-webkit-full-screen #simulation-wrapper .controls,
+:-moz-full-screen #simulation-wrapper .controls {
+    margin-bottom: 20px; /* Tambahkan ruang di atas kanvas */
+    /* Pastikan kontrol tetap di tengah */
+    align-self: flex-start; 
+    margin-left: 10%; /* Biarkan ada sedikit margin dari sisi kiri/kanan */
+}
+
+/* Gaya KHUSUS untuk Teks Data di dalam Fullscreen */
+:fullscreen #simulation-wrapper p,
+:-webkit-full-screen #simulation-wrapper p,
+:-moz-full-screen #simulation-wrapper p {
+    font-size: 1.2em;
+    align-self: flex-start;
+    margin-left: 10%;
 }

@@ -184,34 +184,51 @@ let glider = (p) => {
 // Menginisialisasi instance GLB
 let myGlider = new p5(glider);
 
-// --- FUNGSI GLOBAL UNTUK FULLSCREEN ---
-// Fungsi ini dipanggil oleh tombol Fullscreen di HTML
+// --- FUNGSI GLOBAL UNTUK FULLSCREEN (Diperbaiki) ---
 window.toggleFullscreen = () => {
-    let canvas = myGlider.canvas;
+    // Target yang ingin difullscreen adalah div#simulation-wrapper
+    let wrapper = document.getElementById('simulation-wrapper');
     
-    if (p5.prototype.getFullScreenElement()) {
-        // Jika sedang fullscreen, keluar
-        p5.prototype.fullscreen(false);
+    // Periksa apakah browser saat ini dalam mode fullscreen (elemen apapun)
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) {
+        // Keluar dari mode fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { /* Firefox */
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+            document.webkitExitFullscreen();
+        }
     } else {
-        // Jika tidak fullscreen, masuk ke fullscreen (elemen yang difullscreen adalah wrapper simulasi)
-        // Kita targetkan div#simulation-wrapper agar semua kontrol ikut masuk fullscreen
-        let wrapper = document.getElementById('simulation-wrapper');
-        p5.prototype.fullscreen(true, wrapper); 
+        // Masuk ke mode fullscreen, hanya wrapper simulasi yang diperluas
+        if (wrapper.requestFullscreen) {
+            wrapper.requestFullscreen();
+        } else if (wrapper.mozRequestFullScreen) { /* Firefox */
+            wrapper.mozRequestFullScreen();
+        } else if (wrapper.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            wrapper.webkitRequestFullscreen();
+        }
     }
 }
 
-// Fungsi P5.js bawaan yang dipanggil saat ukuran jendela berubah (termasuk saat fullscreen)
+// Fungsi P5.js bawaan yang dipanggil saat ukuran jendela/viewport berubah (termasuk saat fullscreen)
 p5.prototype.windowResized = () => {
-    // Cek apakah mode fullscreen aktif
-    if (p5.prototype.getFullScreenElement()) {
-        // Jika fullscreen, atur ulang ukuran kanvas agar memenuhi layar
-        myGlider.resizeCanvas(window.innerWidth, window.innerHeight * 0.7); // 70% tinggi layar
+    // P5.js tidak memiliki fungsi getFullScreenElement yang universal, 
+    // jadi kita gunakan pengecekan DOM standar:
+    const isFullScreen = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement;
+
+    if (isFullScreen) {
+        // Jika fullscreen AKTIF, atur ulang ukuran kanvas GLB
+        // Kita gunakan dimensi jendela (viewport) saat ini
+        myGlider.resizeCanvas(window.innerWidth, window.innerHeight); 
     } else {
-        // Jika kembali ke mode normal, kembalikan ukuran kanvas ke 600x200
+        // Jika kembali ke mode normal, kembalikan ukuran kanvas GLB ke 600x200
         myGlider.resizeCanvas(600, 200);
-        // PENTING: Refresh tampilan grid dan posisi
-        myGlider.drawGrid(); 
     }
+    
+    // PENTING: Panggil p.draw() untuk refresh tampilan grid dan objek setelah resize
+    myGlider.loop();
+    if (myGlider.isPaused) myGlider.noLoop();
 }
 
 // Membuat fungsi global yang dipanggil dari tombol/input HTML
