@@ -33,7 +33,7 @@ let glider = (p) => {
           this.x += this.v * dt * SCALE_METER * currentScaleFactor;
           
           // Simpan jejak (trace)
-          if (p.frameCount % 10 === 0) { 
+          if (p.frameCount % 20 === 0) { 
               // Posisi Y di trace juga harus diskalakan
               this.trace.push(p.createVector(this.x, this.yOffset * currentScaleFactor));
               if (this.trace.length > TRACE_LIMIT) {
