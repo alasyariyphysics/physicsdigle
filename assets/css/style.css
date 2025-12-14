@@ -6,10 +6,10 @@ body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column
 
 /* Sidebar */
 #project-sidebar {
-  width: 250px;
-  background: #f4f4f4;
-  padding: 20px;
-  border-right: 1px solid #ddd;
+  width: 250px;
+  background: #f4f4f4;
+  padding: 20px;
+  border-right: 1px solid #ddd;
 }
 #project-sidebar ul { list-style: none; padding: 0; }
 #project-sidebar li { margin-bottom: 10px; }
@@ -25,11 +25,11 @@ body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column
 
 /* Wadah Simulasi */
 .simulation-container {
-  border: 2px solid #333;
-  padding: 10px;
-  margin-top: 20px;
-  display: inline-block;
-  background: #fafafa;
+  border: 2px solid #333;
+  padding: 10px;
+  margin-top: 20px;
+  display: inline-block;
+  background: #fafafa;
 }
 
 
@@ -38,50 +38,69 @@ body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column
 /* -------------------------------------- */
 
 #simulation-wrapper {
-    position: relative; 
-    padding-top: 20px; 
-    /* Tambahkan transisi agar perubahan ukuran terlihat mulus */
-    transition: width 0.3s, height 0.3s; 
+    position: relative; 
+    padding-top: 20px; 
+    /* Tambahkan transisi agar perubahan ukuran terlihat mulus */
+    transition: width 0.3s, height 0.3s; 
 }
 
 #fullscreenButton {
-    /* ... (Tetap sama) ... */
-    position: absolute;
-    top: 0;
-    right: 0;
-    /* ... */
+    /* ... (Tetap sama) ... */
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* ... */
 }
 
 /* Gaya KHUSUS untuk Elemen Wrapper saat berada dalam mode Fullscreen */
 :fullscreen#simulation-wrapper,
 :-webkit-full-screen#simulation-wrapper,
 :-moz-full-screen#simulation-wrapper {
-    background: #fff; 
-    width: 100vw;
-    height: 100vh;
-    /* Gunakan Flexbox untuk memusatkan kontrol di tengah layar besar */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0; /* Hapus padding agar memenuhi layar */
+    /* DIUBAH: Gunakan latar belakang hitam/gelap untuk kontras */
+    background: #000; 
+    width: 100vw;
+    height: 100vh;
+    /* Gunakan Flexbox untuk memusatkan kontrol di tengah layar besar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* Hapus padding agar memenuhi layar */
 }
 
 /* Gaya KHUSUS untuk Kontrol di dalam Fullscreen */
 :fullscreen #simulation-wrapper .controls,
 :-webkit-full-screen #simulation-wrapper .controls,
 :-moz-full-screen #simulation-wrapper .controls {
-    margin-bottom: 20px; /* Tambahkan ruang di atas kanvas */
-    /* Pastikan kontrol tetap di tengah */
-    align-self: flex-start; 
-    margin-left: 10%; /* Biarkan ada sedikit margin dari sisi kiri/kanan */
+    margin-bottom: 20px; /* Tambahkan ruang di atas kanvas */
+    /* Pastikan kontrol tetap di tengah */
+    align-self: flex-start; 
+    margin-left: 10%; /* Biarkan ada sedikit margin dari sisi kiri/kanan */
 }
 
-/* Gaya KHUSUS untuk Teks Data di dalam Fullscreen */
+/* Gaya KHUSUS untuk Teks Data dan Label Input di dalam Fullscreen (PERBAIKAN VISIBILITAS) */
 :fullscreen #simulation-wrapper p,
 :-webkit-full-screen #simulation-wrapper p,
-:-moz-full-screen #simulation-wrapper p {
-    font-size: 1.2em;
-    align-self: flex-start;
-    margin-left: 10%;
+:-moz-full-screen #simulation-wrapper p,
+:fullscreen #simulation-wrapper label, /* Ditambahkan untuk visibility input V Objek */
+:-webkit-full-screen #simulation-wrapper label,
+:-moz-full-screen #simulation-wrapper label {
+    /* DIUBAH: Teks menjadi putih agar terlihat di latar belakang hitam */
+    color: white; 
+    font-size: 1.2em;
+    align-self: flex-start;
+    margin-left: 10%;
+    margin-top: 5px; 
+    margin-bottom: 5px; 
+}
+
+/* Penyesuaian agar input range/slider terlihat baik di background gelap (Opsional) */
+:fullscreen #simulation-wrapper input[type="range"] {
+    background: #444; 
+}
+
+/* Tambahan: Pastikan teks di luar wrapper (posisi objek) juga terlihat */
+/* Jika kamu ingin posisi objek juga terlihat putih, tambahkan aturan ini: */
+#project-content :fullscreen ~ p {
+    color: white;
 }
