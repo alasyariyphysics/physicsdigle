@@ -97,7 +97,7 @@ body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column
 
 /* Penyesuaian agar input range/slider terlihat baik di background gelap (Opsional) */
 :fullscreen #simulation-wrapper input[type="range"] {
-    background: #444; 
+    background: white; 
 }
 
 /* Tambahan: Pastikan teks di luar Wrapper (Posisi Objek) juga terlihat */
