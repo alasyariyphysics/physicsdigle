@@ -1,26 +1,54 @@
-<div id="simulation-wrapper">
-    <button id="fullscreenButton" onclick="toggleFullscreen()">&#x26F6; Fullscreen</button>
+---
+layout: default
+title: Simulasi GLBB & Whiteboard
+---
+
+<h1>Kinematika: Gerak Lurus Berubah Beraturan</h1>
+
+<section>
+    <h2>Simulasi GLBB</h2>
     
-    <div class="controls">
-        <button onclick="myGlbb.resetSim()">Reset</button>
-        <p>Waktu: <span id="timeDisplay">0.00</span> s</p>
+    <div class="simulation-container">
+        <div id="simulation-wrapper">
+                <button id="fullscreenButton" onclick="toggleFullscreen()">&#x26F6; Fullscreen</button>
+                
+                <div class="controls">
+                    <button onclick="myGlbb.resetSim()">Reset</button>
+                    <p>Waktu: <span id="timeDisplay">0.00</span> s</p>
+                </div>
+            
+                <div class="input-control">
+                    <label>Objek 1 (Merah): 
+                        V0: <input type="range" min="0" max="5" step="0.1" value="1" oninput="myGlbb.updateParam(1, 'v', this.value)"> <span id="vVal1">1</span> m/s |
+                        a: <input type="range" min="-1" max="2" step="0.1" value="0.5" oninput="myGlbb.updateParam(1, 'a', this.value)"> <span id="aVal1">0.5</span> m/s²
+                    </label>
+                    <p>V saat ini: <span id="vNow1Display">0.00</span> m/s | Posisi: <span id="pos1Display">0.00</span> m</p>
+                </div>
+            
+                <div class="input-control">
+                    <label>Objek 2 (Biru): 
+                        V0: <input type="range" min="0" max="5" step="0.1" value="2" oninput="myGlbb.updateParam(2, 'v', this.value)"> <span id="vVal2">2</span> m/s |
+                        a: <input type="range" min="-1" max="2" step="0.1" value="-0.2" oninput="myGlbb.updateParam(2, 'a', this.value)"> <span id="aVal2">-0.2</span> m/s²
+                    </label>
+                    <p>V saat ini: <span id="vNow2Display">0.00</span> m/s | Posisi: <span id="pos2Display">0.00</span> m</p>
+                </div>
+            
+                <div id="glbb-canvas-holder"></div>
+        </div> 
     </div>
+</section>
 
-    <div class="input-control">
-        <label>Objek 1 (Merah): 
-            V0: <input type="range" min="0" max="5" step="0.1" value="1" oninput="myGlbb.updateParam(1, 'v', this.value)"> <span id="vVal1">1</span> m/s |
-            a: <input type="range" min="-1" max="2" step="0.1" value="0.5" oninput="myGlbb.updateParam(1, 'a', this.value)"> <span id="aVal1">0.5</span> m/s²
-        </label>
-        <p>V saat ini: <span id="vNow1Display">0.00</span> m/s | Posisi: <span id="pos1Display">0.00</span> m</p>
+<hr>
+
+<section>
+    <h2>Whiteboard Interaktif</h2>
+    <p>Gunakan mouse untuk menggambar atau mencatat di kanvas. Klik "Clear" untuk menghapus.</p>
+
+    <div class="simulation-container">
+        <div id="whiteboard-canvas-holder"></div>
+        <button onclick="clearWhiteboard()">Clear Whiteboard</button>
     </div>
+</section>
 
-    <div class="input-control">
-        <label>Objek 2 (Biru): 
-            V0: <input type="range" min="0" max="5" step="0.1" value="2" oninput="myGlbb.updateParam(2, 'v', this.value)"> <span id="vVal2">2</span> m/s |
-            a: <input type="range" min="-1" max="2" step="0.1" value="-0.2" oninput="myGlbb.updateParam(2, 'a', this.value)"> <span id="aVal2">-0.2</span> m/s²
-        </label>
-        <p>V saat ini: <span id="vNow2Display">0.00</span> m/s | Posisi: <span id="pos2Display">0.00</span> m</p>
-    </div>
-
-    <div id="glbb-canvas-holder"></div>
-</div>
+<script src="{{ site.baseurl }}/assets/js/simulations/glb.js"></script>
+<script src="{{ site.baseurl }}/assets/js/simulations/whiteboard.js"></script>
