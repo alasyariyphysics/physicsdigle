@@ -38,71 +38,74 @@ body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column
 /* -------------------------------------- */
 
 #simulation-wrapper {
-    position: relative; 
-    padding-top: 20px; 
-    transition: width 0.3s, height 0.3s; 
+    position: relative; 
+    padding-top: 20px; 
+    transition: width 0.3s, height 0.3s; 
+    background: #fafafa; /* Warna latar belakang normal */
 }
 
 #fullscreenButton {
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
 }
 
-/* Gaya KHUSUS untuk Elemen Wrapper saat berada dalam mode Fullscreen */
+/* Gaya saat mode Fullscreen */
 :fullscreen#simulation-wrapper,
 :-webkit-full-screen#simulation-wrapper,
 :-moz-full-screen#simulation-wrapper {
-    /* DIUBAH: Gunakan latar belakang hitam/gelap untuk kontras */
-    background: #000 !important; /* Paksa latar belakang hitam */
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0; 
+    /* UBAH KE PUTIH: Agar bagian hitam tadi menghilang */
+    background: white !important; 
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; 
+    overflow-y: auto; /* Jaga-jaga jika konten melebihi tinggi layar */
 }
 
-/* 🚨 PERBAIKAN FINAL VISIBILITAS TEKS: Paksa semua elemen teks di dalam wrapper menjadi putih */
+/* 🚨 PERBAIKAN TEKS: Paksa semua teks menjadi HITAM karena background sudah putih */
 :fullscreen#simulation-wrapper *,
 :-webkit-full-screen#simulation-wrapper *,
 :-moz-full-screen#simulation-wrapper * {
-    color: white !important; 
+    color: #333 !important; 
 }
 
+/* Gaya untuk tombol agar tetap terlihat bagus di background putih */
+:fullscreen#simulation-wrapper button,
+:-webkit-full-screen#simulation-wrapper button,
+:-moz-full-screen#simulation-wrapper button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    color: black !important;
+    padding: 5px 10px;
+    cursor: pointer;
+}
 
-/* Gaya KHUSUS untuk Kontrol di dalam Fullscreen */
+/* Tata letak kontrol saat Fullscreen */
 :fullscreen #simulation-wrapper .controls,
-:-webkit-full-screen #simulation-wrapper .controls,
-:-moz-full-screen #simulation-wrapper .controls {
-    margin-bottom: 20px; 
-    align-self: flex-start; 
-    margin-left: 10%; 
+:-webkit-full-screen #simulation-wrapper .controls {
+    margin-bottom: 15px; 
+    align-self: flex-start; 
+    margin-left: 5%; 
 }
 
-/* Gaya KHUSUS untuk Teks Data dan Label Input di dalam Fullscreen */
+/* Tata letak teks data saat Fullscreen */
 :fullscreen #simulation-wrapper p,
 :-webkit-full-screen #simulation-wrapper p,
-:-moz-full-screen #simulation-wrapper p,
 :fullscreen #simulation-wrapper label, 
-:-webkit-full-screen #simulation-wrapper label,
-:-moz-full-screen #simulation-wrapper label {
-    font-size: 1.2em;
-    align-self: flex-start;
-    margin-left: 10%;
-    margin-top: 5px; 
-    margin-bottom: 5px; 
+:-webkit-full-screen #simulation-wrapper label {
+    font-size: 1.1em;
+    align-self: flex-start;
+    margin-left: 5%;
+    margin-top: 5px; 
+    margin-bottom: 5px; 
 }
 
-/* Penyesuaian agar input range/slider terlihat baik di background gelap (Opsional) */
+/* Slider (Input Range) agar kontras di background putih */
 :fullscreen #simulation-wrapper input[type="range"] {
-    background: white; 
-}
-
-/* Tambahan: Pastikan teks di luar Wrapper (Posisi Objek) juga terlihat */
-.simulation-container:fullscreen ~ p,
-.simulation-container:-webkit-full-screen ~ p,
-.simulation-container:-moz-full-screen ~ p {
-    color: white !important; 
+    accent-color: #007bff; /* Warna biru untuk slider */
 }
