@@ -1,4 +1,6 @@
-/* Import Font Poppins jika tidak melalui HTML */
+/* ============================================================
+   1. IMPORT & VARIABLE DEFINITION
+   ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 :root {
@@ -6,11 +8,19 @@
     --primary-red: #d9534f;
     --bg-white: #ffffff;
     --text-dark: #2d3436;
+    --text-muted: #636e72;
     --sidebar-bg: #f8f9fa;
     --border-color: #dee2e6;
+    --hover-bg: #eef2f7;
 }
 
-/* Reset & Global */
+/* ============================================================
+   2. GLOBAL RESET & BASE STYLES
+   ============================================================ */
+* {
+    box-sizing: border-box;
+}
+
 body { 
     margin: 0; 
     font-family: 'Poppins', sans-serif; 
@@ -21,12 +31,52 @@ body {
     background-color: var(--bg-white);
 }
 
-h1, h2, h3 { color: var(--primary-blue); font-weight: 600; }
+h1, h2, h3 { 
+    color: var(--primary-blue); 
+    font-weight: 600; 
+}
 
-/* Layout Utama */
-#wrapper { display: flex; flex: 1; }
+/* ============================================================
+   3. HEADER MOBILE (Tombol HOME)
+   ============================================================ */
+.header-mobile {
+    background-color: var(--primary-blue);
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
 
-/* Sidebar Modern */
+.header-mobile a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    transition: opacity 0.3s;
+}
+
+.header-mobile a:hover {
+    opacity: 0.8;
+}
+
+/* ============================================================
+   4. LAYOUT STRUCTURE
+   ============================================================ */
+#wrapper { 
+    display: flex; 
+    flex: 1; 
+}
+
+#project-content { 
+    flex: 1; 
+    padding: 40px; 
+}
+
+/* ============================================================
+   5. SIDEBAR NAVIGATION
+   ============================================================ */
 #project-sidebar {
     width: 280px;
     background: var(--sidebar-bg);
@@ -38,11 +88,18 @@ h1, h2, h3 { color: var(--primary-blue); font-weight: 600; }
     padding: 0 25px;
     font-size: 1.2rem;
     margin-bottom: 20px;
+    color: var(--primary-blue);
 }
 
-#project-sidebar ul { list-style: none; padding: 0; margin: 0; }
+#project-sidebar ul { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+}
 
-/* Menu Utama (Parent) */
+/* --- Menu Utama & Beranda --- */
+/* Gunakan class .menu-item di HTML untuk Beranda & Collapsible */
+#project-sidebar li .menu-item,
 #project-sidebar li .collapsible {
     text-decoration: none;
     color: var(--text-dark);
@@ -50,35 +107,40 @@ h1, h2, h3 { color: var(--primary-blue); font-weight: 600; }
     padding: 12px 25px;
     font-weight: 600;
     border-left: 4px solid transparent;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     background: #fff;
     border-bottom: 1px solid #eee;
+    cursor: pointer;
 }
 
+#project-sidebar li .menu-item:hover,
 #project-sidebar li .collapsible:hover,
 #project-sidebar li .collapsible.active {
     color: var(--primary-blue);
-    background: #eef2f7;
+    background: var(--hover-bg);
     border-left-color: var(--primary-blue);
+    padding-left: 30px; /* Efek geser saat hover */
 }
 
-/* Submenu (Child) */
+/* --- Submenu (Child) --- */
 .sub-menu { 
     display: none; 
     background: #ffffff;
     padding: 5px 0;
 }
 
-.sub-menu.open { display: block; }
+.sub-menu.open { 
+    display: block; 
+}
 
 .sub-menu li a {
     text-decoration: none;
-    color: #636e72;
+    color: var(--text-muted);
     display: block;
-    padding: 8px 25px 8px 45px; /* Indentasi lebih dalam */
+    padding: 10px 25px 10px 45px;
     font-size: 0.9rem;
     position: relative;
-    transition: 0.2s;
+    transition: all 0.2s;
 }
 
 .sub-menu li a::before {
@@ -91,49 +153,68 @@ h1, h2, h3 { color: var(--primary-blue); font-weight: 600; }
 .sub-menu li a:hover {
     color: var(--primary-red);
     background: #fff5f5;
+    padding-left: 50px;
 }
 
-/* Konten Utama */
-#project-content { flex: 1; padding: 40px; }
-
-/* Wadah Simulasi */
+/* ============================================================
+   6. SIMULATION COMPONENTS
+   ============================================================ */
 .simulation-container {
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px;
     margin-top: 20px;
     background: #fff;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-/* Tombol & Kontrol */
+/* Tombol Kontrol */
 button {
     font-family: 'Poppins', sans-serif;
-    padding: 8px 18px;
+    padding: 10px 20px;
     border-radius: 6px;
     border: none;
     cursor: pointer;
     font-weight: 500;
-    transition: 0.3s;
+    transition: all 0.3s;
+    margin-right: 5px;
 }
 
 #fullscreenButton { background: var(--primary-blue); color: white; }
 #pauseButton { background: #6c757d; color: white; }
 #resetButton { background: var(--primary-red); color: white; }
 
-button:hover { opacity: 0.85; transform: translateY(-1px); }
-
-/* Slider Styling */
-input[type="range"] {
-    accent-color: var(--primary-blue);
-    margin: 10px 0;
+button:hover { 
+    opacity: 0.9; 
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* FULLSCREEN STYLING */
+/* Slider & Input */
+.input-control {
+    margin-bottom: 15px;
+}
+
+input[type="range"] {
+    accent-color: var(--primary-blue);
+    width: 200px;
+    vertical-align: middle;
+}
+
+/* ============================================================
+   7. FULLSCREEN STYLING
+   ============================================================ */
 :fullscreen#simulation-wrapper {
     background: white !important;
     font-family: 'Poppins', sans-serif;
     padding: 40px;
+    overflow-y: auto;
 }
 
-:fullscreen#simulation-wrapper * { color: var(--text-dark) !important; }
+:fullscreen#simulation-wrapper * { 
+    color: var(--text-dark) !important; 
+}
+
+/* Pendukung vendor fullscreen */
+:-webkit-full-screen#simulation-wrapper { background: white; padding: 40px; }
+:-moz-full-screen#simulation-wrapper { background: white; padding: 40px; }
