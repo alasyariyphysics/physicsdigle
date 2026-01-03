@@ -1,111 +1,139 @@
-/* Reset sederhana */
-body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+/* Import Font Poppins jika tidak melalui HTML */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+    --primary-blue: #0056b3;
+    --primary-red: #d9534f;
+    --bg-white: #ffffff;
+    --text-dark: #2d3436;
+    --sidebar-bg: #f8f9fa;
+    --border-color: #dee2e6;
+}
+
+/* Reset & Global */
+body { 
+    margin: 0; 
+    font-family: 'Poppins', sans-serif; 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh; 
+    color: var(--text-dark);
+    background-color: var(--bg-white);
+}
+
+h1, h2, h3 { color: var(--primary-blue); font-weight: 600; }
 
 /* Layout Utama */
 #wrapper { display: flex; flex: 1; }
 
-/* Sidebar */
+/* Sidebar Modern */
 #project-sidebar {
-  width: 250px;
-  background: #f4f4f4;
-  padding: 20px;
-  border-right: 1px solid #ddd;
+    width: 280px;
+    background: var(--sidebar-bg);
+    padding: 30px 0;
+    border-right: 1px solid var(--border-color);
 }
-#project-sidebar ul { list-style: none; padding: 0; }
-#project-sidebar li { margin-bottom: 10px; }
-#project-sidebar a { text-decoration: none; color: #333; display: block; padding: 5px; }
-#project-sidebar a:hover { color: #007bff; }
 
-/* Submenu (sembunyi dulu) */
-.sub-menu { display: none; padding-left: 20px; }
+#project-sidebar h2 {
+    padding: 0 25px;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+#project-sidebar ul { list-style: none; padding: 0; margin: 0; }
+
+/* Menu Utama (Parent) */
+#project-sidebar li .collapsible {
+    text-decoration: none;
+    color: var(--text-dark);
+    display: block;
+    padding: 12px 25px;
+    font-weight: 600;
+    border-left: 4px solid transparent;
+    transition: all 0.3s;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+#project-sidebar li .collapsible:hover,
+#project-sidebar li .collapsible.active {
+    color: var(--primary-blue);
+    background: #eef2f7;
+    border-left-color: var(--primary-blue);
+}
+
+/* Submenu (Child) */
+.sub-menu { 
+    display: none; 
+    background: #ffffff;
+    padding: 5px 0;
+}
+
 .sub-menu.open { display: block; }
+
+.sub-menu li a {
+    text-decoration: none;
+    color: #636e72;
+    display: block;
+    padding: 8px 25px 8px 45px; /* Indentasi lebih dalam */
+    font-size: 0.9rem;
+    position: relative;
+    transition: 0.2s;
+}
+
+.sub-menu li a::before {
+    content: "•";
+    position: absolute;
+    left: 30px;
+    color: var(--primary-red);
+}
+
+.sub-menu li a:hover {
+    color: var(--primary-red);
+    background: #fff5f5;
+}
 
 /* Konten Utama */
 #project-content { flex: 1; padding: 40px; }
 
 /* Wadah Simulasi */
 .simulation-container {
-  border: 2px solid #333;
-  padding: 10px;
-  margin-top: 20px;
-  display: inline-block;
-  background: #fafafa;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-
-/* -------------------------------------- */
-/* FULLSCREEN & SIMULATION STYLING (VERSI DIPERKUAT) */
-/* -------------------------------------- */
-
-#simulation-wrapper {
-    position: relative; 
-    padding-top: 20px; 
-    transition: width 0.3s, height 0.3s; 
-    background: #fafafa; /* Warna latar belakang normal */
-}
-
-#fullscreenButton {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 10;
-}
-
-/* Gaya saat mode Fullscreen */
-:fullscreen#simulation-wrapper,
-:-webkit-full-screen#simulation-wrapper,
-:-moz-full-screen#simulation-wrapper {
-    /* UBAH KE PUTIH: Agar bagian hitam tadi menghilang */
-    background: white !important; 
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px; 
-    overflow-y: auto; /* Jaga-jaga jika konten melebihi tinggi layar */
-}
-
-/* 🚨 PERBAIKAN TEKS: Paksa semua teks menjadi HITAM karena background sudah putih */
-:fullscreen#simulation-wrapper *,
-:-webkit-full-screen#simulation-wrapper *,
-:-moz-full-screen#simulation-wrapper * {
-    color: #333 !important; 
-}
-
-/* Gaya untuk tombol agar tetap terlihat bagus di background putih */
-:fullscreen#simulation-wrapper button,
-:-webkit-full-screen#simulation-wrapper button,
-:-moz-full-screen#simulation-wrapper button {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    color: black !important;
-    padding: 5px 10px;
+/* Tombol & Kontrol */
+button {
+    font-family: 'Poppins', sans-serif;
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
     cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s;
 }
 
-/* Tata letak kontrol saat Fullscreen */
-:fullscreen #simulation-wrapper .controls,
-:-webkit-full-screen #simulation-wrapper .controls {
-    margin-bottom: 15px; 
-    align-self: flex-start; 
-    margin-left: 5%; 
+#fullscreenButton { background: var(--primary-blue); color: white; }
+#pauseButton { background: #6c757d; color: white; }
+#resetButton { background: var(--primary-red); color: white; }
+
+button:hover { opacity: 0.85; transform: translateY(-1px); }
+
+/* Slider Styling */
+input[type="range"] {
+    accent-color: var(--primary-blue);
+    margin: 10px 0;
 }
 
-/* Tata letak teks data saat Fullscreen */
-:fullscreen #simulation-wrapper p,
-:-webkit-full-screen #simulation-wrapper p,
-:fullscreen #simulation-wrapper label, 
-:-webkit-full-screen #simulation-wrapper label {
-    font-size: 1.1em;
-    align-self: flex-start;
-    margin-left: 5%;
-    margin-top: 5px; 
-    margin-bottom: 5px; 
+/* FULLSCREEN STYLING */
+:fullscreen#simulation-wrapper {
+    background: white !important;
+    font-family: 'Poppins', sans-serif;
+    padding: 40px;
 }
 
-/* Slider (Input Range) agar kontras di background putih */
-:fullscreen #simulation-wrapper input[type="range"] {
-    accent-color: #007bff; /* Warna biru untuk slider */
-}
+:fullscreen#simulation-wrapper * { color: var(--text-dark) !important; }
