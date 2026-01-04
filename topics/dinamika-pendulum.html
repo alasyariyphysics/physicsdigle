@@ -1,0 +1,100 @@
+---
+layout: default
+title: Dinamika Pendulum
+---
+
+<article class="physics-article">
+  <h1>Dinamika Pendulum (Bandul Matematis)</h1>
+  
+  <p>
+    Pendulum atau bandul matematis adalah sebuah sistem ideal yang terdiri dari sebuah massa titik ($m$) yang digantungkan pada tali tak bermassa dengan panjang ($L$) yang tidak dapat mulur. Ketika disimpangkan, gravitasi bekerja sebagai gaya pemulih yang menyebabkan benda berosilasi di sekitar titik setimbang.
+  </p>
+
+  <hr>
+
+  <h2>1. Simpangan dan Gaya Pemulih</h2>
+  <p>
+    Simpangan pendulum dapat dinyatakan dalam bentuk sudut ($\theta$) atau jarak busur ($s$). Gaya pemulih pada pendulum berasal dari komponen gaya berat yang tegak lurus terhadap tali.
+  </p>
+  
+  <div class="equation">
+    $$F_p = -mg \sin \theta$$
+  </div>
+  <p>
+    Untuk sudut yang sangat kecil ($\theta < 10^\circ$), berlaku pendekatan $\sin \theta \approx \theta \approx \frac{s}{L}$. Maka gaya pemulihnya menjadi:
+  </p>
+  <div class="equation">
+    $$F_p = -mg \left( \frac{s}{L} \right)$$
+  </div>
+
+  <h2>2. Periode dan Frekuensi</h2>
+  <p>
+    Karena gaya pemulih berbanding lurus dengan simpangan ($s$), maka pendulum melakukan <strong>Gerak Harmonik Sederhana (GHS)</strong>. Berdasarkan hukum II Newton, kita dapat menurunkan parameter waktu getaran:
+  </p>
+
+  <h3>A. Periode ($T$)</h3>
+  <p>Periode adalah waktu yang dibutuhkan untuk satu getaran penuh. Nilainya hanya bergantung pada panjang tali dan gravitasi, tidak pada massa benda.</p>
+  <div class="equation">
+    $$T = 2\pi \sqrt{\frac{L}{g}}$$
+  </div>
+
+  <h3>B. Frekuensi ($f$)</h3>
+  <p>Frekuensi adalah jumlah getaran per satuan waktu ($f = 1/T$).</p>
+  <div class="equation">
+    $$f = \frac{1}{2\pi} \sqrt{\frac{g}{L}}$$
+  </div>
+
+  <h2>3. Energi Mekanik pada Pendulum</h2>
+  <p>
+    Sama halnya dengan sistem pegas, energi mekanik pada pendulum bersifat kekal jika mengabaikan hambatan udara. Energi terus berpindah antara bentuk kinetik dan potensial gravitasi.
+  </p>
+  
+  <div class="equation">
+    $$E_m = K + U = \text{Konstan}$$
+    $$E_m = \frac{1}{2}mv^2 + mgh$$
+  </div>
+
+  <ul>
+    <li><strong>Energi Potensial ($U$):</strong> Maksimum saat berada di simpangan terjauh (titik tertinggi), di mana $h = L(1 - \cos \theta)$.</li>
+    <li><strong>Energi Kinetik ($K$):</strong> Maksimum saat berada di titik terendah (titik setimbang), di mana kecepatan $v$ mencapai nilai puncak.</li>
+  </ul>
+
+  <hr>
+
+  <section class="variables-summary">
+    <h3>Daftar Variabel Terkait</h3>
+    <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+      <tr style="background: var(--hover-bg);">
+        <th style="padding: 10px; border: 1px solid var(--border-color);">Variabel</th>
+        <th style="padding: 10px; border: 1px solid var(--border-color);">Simbol</th>
+        <th style="padding: 10px; border: 1px solid var(--border-color);">Satuan (SI)</th>
+      </tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Panjang Tali</td><td style="text-align:center;">$L$</td><td style="text-align:center;">m</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Massa Beban</td><td style="text-align:center;">$m$</td><td style="text-align:center;">kg</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Percepatan Gravitasi</td><td style="text-align:center;">$g$</td><td style="text-align:center;">m/s²</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Sudut Simpangan</td><td style="text-align:center;">$\theta$</td><td style="text-align:center;">rad / derajat</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Ketinggian Vertikal</td><td style="text-align:center;">$h$</td><td style="text-align:center;">m</td></tr>
+    </table>
+  </section>
+
+  <section class="references">
+    <h3>Referensi Ilmiah</h3>
+    <ul>
+      <li>Young, H. D., & Freedman, R. A. (2016). <em>Sears and Zemansky's University Physics</em> (14th ed.). Pearson.</li>
+      <li>Halliday, D., Resnick, R., & Walker, J. (2014). <em>Fundamentals of Physics</em> (10th ed.). Wiley.</li>
+    </ul>
+  </section>
+</article>
+
+<style>
+  .variables-summary th { color: var(--primary-blue); }
+  .equation {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    border-left: 5px solid var(--primary-blue);
+    overflow-x: auto;
+  }
+</style>
