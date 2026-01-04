@@ -29,11 +29,25 @@ body {
     min-height: 100vh; 
     color: var(--text-dark);
     background-color: var(--bg-white);
+    line-height: 1.6;
 }
 
 h1, h2, h3 { 
     color: var(--primary-blue); 
     font-weight: 600; 
+}
+
+/* Efek Hover untuk Link Umum di Luar Sidebar */
+a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+a:hover {
+    color: var(--primary-red);
+    text-decoration: underline;
 }
 
 /* ============================================================
@@ -59,6 +73,8 @@ h1, h2, h3 {
 
 .header-mobile a:hover {
     opacity: 0.8;
+    color: white; /* Tetap putih di header mobile saat hover */
+    text-decoration: none;
 }
 
 /* ============================================================
@@ -98,7 +114,6 @@ h1, h2, h3 {
 }
 
 /* --- Menu Utama & Beranda --- */
-/* Gunakan class .menu-item di HTML untuk Beranda & Collapsible */
 #project-sidebar li .menu-item,
 #project-sidebar li .collapsible {
     text-decoration: none;
@@ -119,7 +134,8 @@ h1, h2, h3 {
     color: var(--primary-blue);
     background: var(--hover-bg);
     border-left-color: var(--primary-blue);
-    padding-left: 30px; /* Efek geser saat hover */
+    padding-left: 30px;
+    text-decoration: none; /* Menghilangkan underline khusus sidebar */
 }
 
 /* --- Submenu (Child) --- */
@@ -154,6 +170,7 @@ h1, h2, h3 {
     color: var(--primary-red);
     background: #fff5f5;
     padding-left: 50px;
+    text-decoration: none; /* Menghilangkan underline khusus submenu */
 }
 
 /* ============================================================
