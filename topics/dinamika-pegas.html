@@ -1,0 +1,121 @@
+---
+layout: default
+title: Dinamika Pegas
+---
+
+<article class="physics-article">
+  <h1>Dinamika Pegas dan Elastisitas</h1>
+  
+  <p>
+    Dinamika pegas merupakan cabang mekanika yang mempelajari perilaku benda elastis saat dikenai gaya eksternal. 
+    Pegas adalah elemen mekanik yang dirancang untuk menyimpan energi mekanik melalui deformasi elastis, di mana benda akan kembali ke bentuk semula setelah gaya dilepaskan.
+  </p>
+
+  <hr>
+
+  <h2>1. Hukum Hooke</h2>
+  <p>
+    Prinsip dasar dinamika pegas dirumuskan oleh <strong>Robert Hooke</strong> pada tahun 1676. Hukum Hooke menyatakan bahwa dalam batas elastisitasnya, gaya pemulih ($F_s$) yang dihasilkan oleh pegas berbanding lurus dengan simpangannya ($\Delta x$) namun berlawanan arah.
+  </p>
+  <div class="equation">
+    $$F_s = -k \cdot \Delta x$$
+  </div>
+  <p>Keterangan:</p>
+  <ul>
+    <li>$k$: Konstanta pegas (N/m), merepresentasikan kekakuan pegas.</li>
+    <li>$\Delta x$: Perubahan panjang pegas dari posisi setimbang (m).</li>
+    <li>Tanda negatif ($-$) menunjukkan bahwa gaya selalu mengarah ke titik setimbang (gaya pemulih).</li>
+  </ul>
+
+  
+  <h2>2. Susunan Pegas</h2>
+  <p>Dalam aplikasinya, beberapa pegas sering dikombinasikan untuk mendapatkan nilai konstanta yang diinginkan.</p>
+
+  <h3>A. Susunan Paralel</h3>
+  <p>Pada susunan paralel, semua pegas mengalami pertambahan panjang yang sama ($\Delta x_{total} = \Delta x_1 = \Delta x_2$). Gaya total adalah jumlah gaya dari tiap pegas.</p>
+  <div class="equation">
+    $$k_p = k_1 + k_2 + k_3 + \dots + k_n$$
+  </div>
+
+  <h3>B. Susunan Seri</h3>
+  <p>Pada susunan seri, gaya yang bekerja pada setiap pegas adalah sama ($F_{total} = F_1 = F_2$), namun pertambahan panjang total adalah jumlah dari tiap pertambahan panjang pegas.</p>
+  <div class="equation">
+    $$\frac{1}{k_s} = \frac{1}{k_1} + \frac{1}{k_2} + \frac{1}{k_3} + \dots + \frac{1}{k_n}$$
+  </div>
+
+  <h2>3. Energi Potensial Pegas</h2>
+  <p>
+    Energi potensial elastis ($U$) adalah energi yang tersimpan dalam pegas akibat perubahan bentuknya. Secara matematis, ini merupakan integral dari gaya terhadap perpindahan:
+  </p>
+  <div class="equation">
+    $$U = \int F dx = \int kx dx$$
+    $$U = \frac{1}{2} k (\Delta x)^2$$
+  </div>
+
+  <h2>4. Gerak Harmonik Sederhana (GHS) pada Pegas</h2>
+  <p>
+    Jika sebuah massa ($m$) digantungkan pada pegas dan disimpangkan, sistem akan mengalami Gerak Harmonik Sederhana. Berdasarkan Hukum II Newton ($F = ma$) dan Hukum Hooke ($F = -kx$):
+  </p>
+  <div class="equation">
+    $$ma = -kx \implies m \frac{d^2x}{dt^2} + kx = 0$$
+  </div>
+  
+  <p>Dari persamaan diferensial di atas, kita dapat menurunkan nilai <strong>Periode ($T$)</strong> dan <strong>Frekuensi ($f$)</strong>:</p>
+  
+  <div class="equation">
+    $$T = 2\pi \sqrt{\frac{m}{k}}$$
+    $$f = \frac{1}{2\pi} \sqrt{\frac{k}{m}}$$
+  </div>
+
+  
+  <section class="simulation-container">
+    <h3>Visualisasi Dinamika Pegas</h3>
+    <div id="simulation-wrapper">
+      <p style="text-align: center; color: var(--text-muted);">
+        <em>[Gunakan kontrol di bawah untuk memanipulasi variabel k dan m]</em>
+      </p>
+      <div class="input-control">
+        <label>Konstanta Pegas (k): </label>
+        <input type="range" id="kSlider" min="10" max="100" value="50">
+      </div>
+      <div class="input-control">
+        <label>Massa Benda (m): </label>
+        <input type="range" id="mSlider" min="0.5" max="5" step="0.1" value="1">
+      </div>
+      <button id="pauseButton">Mulai/Jeda</button>
+      <button id="resetButton">Reset</button>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="references">
+    <h3>Referensi Ilmiah</h3>
+    <ul>
+      <li>Halliday, D., Resnick, R., & Walker, J. (2014). <em>Fundamentals of Physics</em> (10th ed.). John Wiley & Sons.</li>
+      <li>Young, H. D., & Freedman, R. A. (2016). <em>Sears and Zemansky's University Physics with Modern Physics</em> (14th ed.). Pearson.</li>
+      <li>Serway, R. A., & Jewett, J. W. (2018). <em>Physics for Scientists and Engineers</em> (10th ed.). Cengage Learning.</li>
+    </ul>
+  </section>
+</article>
+
+<style>
+  .physics-article {
+    line-height: 1.6;
+    max-width: 900px;
+    margin: auto;
+  }
+  .equation {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    overflow-x: auto;
+    border-left: 5px solid var(--primary-blue);
+  }
+  .references {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+</style>
