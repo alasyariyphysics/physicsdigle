@@ -1,0 +1,51 @@
+---
+layout: default
+title: Deret
+---
+
+<article class="physics-article">
+  <h1>Deret Matematis dalam Fisika</h1>
+  
+  <p>
+    Deret digunakan dalam fisika untuk melakukan pendekatan (aproksimasi) pada sistem yang kompleks, seperti deret Taylor untuk osilasi kecil atau deret Fourier untuk analisis gelombang.
+  </p>
+
+  <hr>
+
+  <h2>1. Deret Taylor</h2>
+  <p>
+    Digunakan untuk memperkirakan nilai fungsi di sekitar titik tertentu menggunakan turunan fungsi tersebut.
+  </p>
+  <div class="equation">
+    $$f(x) \approx f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2$$
+  </div>
+  <p>Keterangan:</p>
+  <ul>
+    <li>$f(a)$: Nilai fungsi di titik acuan $a$</li>
+    <li>$f'(a)$: Turunan pertama fungsi di titik $a$</li>
+    <li>$x-a$: Selisih jarak dari titik acuan</li>
+  </ul>
+
+  <h2>2. Deret Fourier (Konsep Dasar)</h2>
+  <p>
+    Menyatakan fungsi periodik sebagai jumlah dari fungsi-fungsi sinus dan kosinus. Sangat penting dalam mekanika kuantum dan akustik.
+  </p>
+  <div class="equation">
+    $$f(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} [a_n \cos(n\omega t) + b_n \sin(n\omega t)]$$
+  </div>
+  <p>Keterangan:</p>
+  <ul>
+    <li>$a_n, b_n$: Koefisien Fourier</li>
+    <li>$\omega$: Frekuensi sudut fundamental</li>
+    <li>$t$: Waktu</li>
+  </ul>
+
+  <hr>
+
+  <section class="references">
+    <h3>Referensi Ilmiah</h3>
+    <ul>
+      <li>Arfken, G. B., & Weber, H. J. (2005). <em>Mathematical Methods for Physicists</em>. Elsevier.</li>
+    </ul>
+  </section>
+</article>
