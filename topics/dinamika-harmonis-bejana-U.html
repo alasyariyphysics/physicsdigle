@@ -1,0 +1,101 @@
+---
+layout: default
+title: Dinamika Harmonis Bejana U
+---
+
+<article class="physics-article">
+  <h1>Dinamika Harmonis pada Bejana U</h1>
+  
+  <p>
+    Sistem bejana U yang berisi fluida ideal merupakan contoh unik dari Gerak Harmonik Sederhana yang melibatkan massa jenis dan luas penampang. Ketika permukaan zat cair di satu sisi ditekan, perbedaan ketinggian menghasilkan gaya pemulih akibat gravitasi yang berusaha mengembalikan sistem ke kondisi setimbang.
+  </p>
+
+  <hr>
+
+  <h2>1. Gaya Pemulih Fluida</h2>
+  <p>
+    Jika cairan dalam bejana U disimpangkan sejauh $x$ dari titik setimbang, maka terjadi perbedaan ketinggian total sebesar $2x$ antara kedua kolom. Berat dari kolom cairan tambahan inilah yang menjadi gaya pemulih ($F_p$).
+  </p>
+
+  
+
+  <div class="equation">
+    $$F_p = -2\rho g A x$$
+  </div>
+  <p>Keterangan:</p>
+  <ul>
+    <li>$\rho$: Massa jenis zat cair ($kg/m^3$)</li>
+    <li>$g$: Percepatan gravitasi ($m/s^2$)</li>
+    <li>$A$: Luas penampang bejana ($m^2$)</li>
+    <li>$x$: Simpangan cairan dari titik setimbang ($m$)</li>
+  </ul>
+
+  <h2>2. Persamaan Gerak dan Periode</h2>
+  <p>
+    Dengan menerapkan Hukum II Newton ($F = ma$) di mana massa total cairan adalah $m = \rho A L$, kita dapat menurunkan rumus periode osilasi cairan tersebut.
+  </p>
+  <div class="equation">
+    $$T = 2\pi \sqrt{\frac{L}{2g}}$$
+  </div>
+  <p>Keterangan:</p>
+  <ul>
+    <li>$T$: Periode osilasi ($s$)</li>
+    <li>$L$: Panjang total kolom cairan di dalam bejana ($m$)</li>
+    <li>$g$: Percepatan gravitasi ($m/s^2$)</li>
+  </ul>
+
+  <h2>3. Frekuensi Osilasi</h2>
+  <p>
+    Frekuensi menunjukkan seberapa banyak getaran air yang terjadi dalam satu detik.
+  </p>
+  <div class="equation">
+    $$f = \frac{1}{2\pi} \sqrt{\frac{2g}{L}}$$
+  </div>
+  <p>Keterangan:</p>
+  <ul>
+    <li>$f$: Frekuensi ($Hz$)</li>
+    <li>$L$: Panjang total kolom cairan ($m$)</li>
+    <li>$g$: Percepatan gravitasi ($m/s^2$)</li>
+  </ul>
+
+  <h2>4. Energi Mekanik pada Bejana U</h2>
+  <p>
+    Energi potensial ($U$) dalam sistem ini berasal dari perubahan pusat massa cairan, sedangkan energi kinetik ($K$) berasal dari gerakan seluruh kolom cairan.
+  </p>
+  <div class="equation">
+    $$E_m = \rho g A x^2 + \frac{1}{2} \rho A L v^2$$
+  </div>
+  <p>Keterangan:</p>
+  <ul>
+    <li>$E_m$: Energi mekanik total ($J$)</li>
+    <li>$v$: Kecepatan aliran cairan ($m/s$)</li>
+    <li>$\rho$: Massa jenis cairan ($kg/m^3$)</li>
+    <li>$A$: Luas penampang bejana ($m^2$)</li>
+    <li>$L$: Panjang total kolom cairan ($m$)</li>
+  </ul>
+
+  <hr>
+
+  <section class="references">
+    <h3>Referensi Ilmiah</h3>
+    <ul>
+      <li>Fowles, G. R., & Cassiday, G. L. (2005). <em>Analytical Mechanics</em>. Thomson Brooks/Cole.</li>
+      <li>Pippard, A. B. (1985). <em>The Physics of Vibration</em>. Cambridge University Press.</li>
+    </ul>
+  </section>
+</article>
+
+<style>
+  .equation {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    border-left: 5px solid var(--primary-blue);
+    overflow-x: auto;
+  }
+  .physics-article ul {
+    margin-bottom: 20px;
+  }
+</style>
