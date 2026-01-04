@@ -2,248 +2,288 @@
 
 let springSim = (p) => {
     // --- Variabel Fisika ---
-    let k = 10;   // Konstanta pegas (N/m)
-    let m = 2.0;  // Massa (kg)
-    let A = 2.0;  // Amplitudo/Simpangan awal (m)
-    
-    let w; // Omega (kecepatan sudut)
-    let T, f; // Periode dan Frekuensi
+    let k, m, A; // Akan diinisialisasi di setup dari nilai slider
+    let w, T, f, TE; // Konstanta turunan
     
     let t = 0; // Waktu berjalan simulasi
-    let currentX = 0; // Posisi saat ini (meter)
-    let currentV = 0; // Kecepatan saat ini (m/s)
-    let PE = 0, KE = 0, TE = 0; // Energi
+    let currentX = 0;
+    let currentV = 0;
+    let PE = 0, KE = 0;
 
-    // --- Variabel Visualisasi ---
-    const SCALE_PIXELS = 50; // 1 meter = 50 piksel
-    let originY; // Titik setimbang (equilibrium) di kanvas
-    let springAnchorY = 30; // Titik gantung pegas di atas
-    let massRadius = 25;
+    // --- Variabel Status & Visualisasi ---
+    let isPaused = true; // Mulai dalam keadaan pause
+    const SCALE_PIXELS = 60; // Skala diperbesar sedikit agar lebih jelas
+    let originY; 
+    let springAnchorY = 40;
+    let massSize = 40;
     
-    // Array untuk menyimpan jejak gelombang (untuk grafik)
+    // Array untuk grafik
     let wavePath = []; 
-    const MAX_WAVE_PATH = 400; // Panjang maksimal jejak grafik
+    const MAX_WAVE_PATH = 500;
+
+    // --- Variabel Whiteboard ---
+    let pg; // Buffer grafis untuk coretan
 
     p.setup = () => {
-        // Membuat kanvas berukuran 600x450 dan menaruhnya di div HTML
-        let canvas = p.createCanvas(600, 450);
+        // Buat kanvas utama
+        let canvas = p.createCanvas(700, 500);
         canvas.parent('canvas-container');
-        p.frameRate(60);
         
-        originY = p.height / 2; // Titik setimbang di tengah vertikal kanvas
+        // Buat buffer grafis transparan untuk whiteboard
+        pg = p.createGraphics(p.width, p.height);
+        pg.clear(); // Pastikan transparan di awal
 
-        // Setup Event Listener untuk Input HTML
+        p.frameRate(60);
+        originY = p.height / 2;
+
+        // Setup Event Listener untuk Slider Input
         p.select('#kInput').input(updateInputs);
         p.select('#mInput').input(updateInputs);
         p.select('#aInput').input(updateInputs);
 
-        // Hitung konstanta awal
-        calculateConstants();
-        updateInputs(); // Update tampilan nilai awal
+        // Setup Event Listener untuk Tombol Kontrol
+        p.select('#playPauseBtn').mousePressed(togglePlayPause);
+        p.select('#resetBtn').mousePressed(resetSimulation);
+        p.select('#fullscreenBtn').mousePressed(toggleFullscreen);
+        p.select('#clearPaintBtn').mousePressed(clearPaint);
+
+        // Inisialisasi nilai awal
+        updateInputs();
+        resetSimulation(); // Reset agar posisi awal sesuai simpangan A
     };
 
-    // Fungsi dijalankan saat slider digeser
+    // --- Fungsi Kontrol ---
+
+    function togglePlayPause() {
+        isPaused = !isPaused;
+        let btn = p.select('#playPauseBtn');
+        if (isPaused) {
+            btn.html('▶ Mulai');
+            btn.style('background-color', '#0056b3');
+        } else {
+            btn.html('⏸ Jeda');
+            btn.style('background-color', '#e67e22'); // Warna oranye saat berjalan
+        }
+    }
+
+    function resetSimulation() {
+        t = 0;
+        wavePath = [];
+        // Saat reset, kembalikan posisi ke simpangan awal (A)
+        currentX = A;
+        currentV = 0;
+        calculateInstantaneousValues(); // Update nilai PE/KE awal
+        if(!isPaused) togglePlayPause(); // Pause setelah reset
+        p.draw(); // Paksa gambar ulang sekali
+    }
+
+    function clearPaint() {
+        pg.clear(); // Hapus buffer whiteboard
+    }
+
+    function toggleFullscreen() {
+        let fs = p.fullscreen();
+        p.fullscreen(!fs);
+    }
+
+    // --- Fungsi Fisika & Input ---
+
     function updateInputs() {
-        // Baca nilai dari slider HTML
+        // Baca nilai dari slider
         k = parseFloat(p.select('#kInput').value());
         m = parseFloat(p.select('#mInput').value());
         A = parseFloat(p.select('#aInput').value());
 
-        // Update tampilan teks di samping slider
+        // Update tampilan teks
         p.select('#kVal').html(k.toFixed(1) + " N/m");
         p.select('#mVal').html(m.toFixed(1) + " kg");
         p.select('#aVal').html(A.toFixed(1) + " m");
 
-        // Hitung ulang konstanta fisika yang bergantung pada input
         calculateConstants();
+        
+        // Jika sedang di-reset/pause di awal, update posisi massanya juga
+        if (t === 0 && isPaused) {
+             currentX = A;
+        }
     }
 
     function calculateConstants() {
-        // 1. Hitung Omega (w = sqrt(k/m))
+        if (m <= 0) m = 0.1; // Mencegah pembagian nol
         w = p.sqrt(k / m);
-        // 2. Hitung Periode (T = 2*pi / w)
         T = p.TWO_PI / w;
-        // 3. Hitung Frekuensi (f = 1/T)
         f = 1.0 / T;
-        // 4. Hitung Energi Total (E = 1/2 * k * A^2) - Konstan
         TE = 0.5 * k * p.sq(A);
 
-        // Update Output HTML yang konstan
         p.select('#tOut').html(T.toFixed(2) + " s");
         p.select('#fOut').html(f.toFixed(2) + " Hz");
         p.select('#teOut').html(TE.toFixed(2) + " J");
     }
 
-    p.draw = () => {
-        p.background(255); // Hapus layar setiap frame
-
-        // --- A. Update Fisika ---
-        let dt = p.deltaTime / 1000; // Ubah milidetik ke detik
-        t += dt; // Waktu berjalan
-
-        // Hitung posisi saat ini: x(t) = A * cos(w*t)
-        currentX = A * p.cos(w * t);
+    function calculateInstantaneousValues() {
+        PE = 0.5 * k * p.sq(currentX);
+        KE = 0.5 * m * p.sq(currentV);
         
-        // Hitung kecepatan saat ini: v(t) = -A * w * sin(w*t)
-        currentV = -A * w * p.sin(w * t);
-
-        // Hitung Energi Sesaat
-        PE = 0.5 * k * p.sq(currentX); // PE = 1/2 k x^2
-        KE = 0.5 * m * p.sq(currentV); // KE = 1/2 m v^2
-
-        // --- B. Update Output HTML Sesaat ---
+        // Update Output HTML
         p.select('#xOut').html(currentX.toFixed(2) + " m");
         p.select('#vOut').html(currentV.toFixed(2) + " m/s");
         p.select('#peOut').html(PE.toFixed(2) + " J");
         p.select('#keOut').html(KE.toFixed(2) + " J");
+    }
 
 
-        // --- C. Menggambar Visualisasi ---
-        
-        // Membagi layar menjadi dua area dengan garis pemisah
-        p.stroke(220);
-        p.line(p.width/2, 0, p.width/2, p.height);
+    // --- Loop Utama p.draw() ---
+    p.draw = () => {
+        p.background(255); // 1. Hapus layar utama
+
+        // 2. Update Fisika jika tidak pause
+        if (!isPaused) {
+            let dt = p.deltaTime / 1000;
+            t += dt;
+            currentX = A * p.cos(w * t);
+            currentV = -A * w * p.sin(w * t);
+            calculateInstantaneousValues();
+        }
+
+        // 3. Gambar Visualisasi Simulasi
+        p.stroke(200); p.strokeWeight(2);
+        p.line(p.width * 0.4, 0, p.width * 0.4, p.height); // Garis pemisah
 
         drawSpringSystem();
         drawWaveGraph();
+
+        // 4. Gambar Layer Whiteboard di paling atas
+        p.image(pg, 0, 0);
     };
 
-    // Fungsi: Menggambar Pegas dan Massa (Bagian Kiri)
+    // --- Fungsi Whiteboard (Mouse Drag) ---
+    p.mouseDragged = () => {
+        // Hanya menggambar jika mouse di dalam area kanvas
+        if (p.mouseX > 0 && p.mouseX < p.width && p.mouseY > 0 && p.mouseY < p.height) {
+            pg.stroke(255, 0, 0); // Warna coretan merah
+            pg.strokeWeight(3);
+            pg.line(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
+        }
+        // Mencegah perilaku default browser saat drag (misal select text)
+        return false; 
+    };
+
+
+    // --- Fungsi Penggambaran ---
+
     function drawSpringSystem() {
-        let centerX = p.width / 4; // Posisi X tengah untuk area kiri
-        
-        // Konversi posisi fisika (meter) ke piksel
-        // Posisi Y massa = Titik Setimbang + (posisi X meter * skala)
-        // Kita gunakan minus karena di kanvas Y positif ke bawah, tapi di fisika biasanya simpangan awal (A) dianggap positif ke atas.
+        let centerX = p.width * 0.2;
+        // Posisi Y massa dalam piksel. Titik setimbang ada di originY.
+        // Jika X positif (simpangan ke atas di fisika), di kanvas Y harus berkurang (naik).
         let massYPixel = originY - (currentX * SCALE_PIXELS); 
 
-        // 1. Gambar Titik Gantung (Anchor)
-        p.fill(100); p.noStroke();
-        p.rectMode(p.CENTER);
-        p.rect(centerX, springAnchorY - 5, 60, 10);
+        // Gambar Anchor
+        p.fill(80); p.noStroke(); p.rectMode(p.CENTER);
+        p.rect(centerX, springAnchorY - 10, 80, 20);
 
-        // 2. Gambar Pegas (Garis Zig-zag)
-        p.noFill();
-        p.stroke(80);
-        p.strokeWeight(2);
-        
-        let springStart = p.createVector(centerX, springAnchorY);
-        let springEnd = p.createVector(centerX, massYPixel - massRadius/2);
-        
-        // Fungsi helper untuk menggambar pegas zig-zag
-        drawZigZagSpring(springStart, springEnd, 12, 15);
+        // Gambar Garis Setimbang
+        p.stroke(0, 150, 255, 150); p.strokeWeight(1);
+        p.drawingContext.setLineDash([5, 5]);
+        p.line(centerX - 80, originY, centerX + 80, originY);
+        p.drawingContext.setLineDash([]);
 
-        // 3. Gambar Garis Setimbang (Equilibrium)
-        p.stroke(200, 200, 255);
-        p.strokeWeight(1);
-        p.drawingContext.setLineDash([5, 5]); // Garis putus-putus
-        p.line(centerX - 60, originY, centerX + 60, originY);
-        p.drawingContext.setLineDash([]); // Reset garis
+        // Gambar Pegas (Perbaikan fungsi zig-zag)
+        p.noFill(); p.stroke(50); p.strokeWeight(3);
+        let springStartVec = p.createVector(centerX, springAnchorY);
+        // Ujung pegas ada di bagian atas massa
+        let springEndVec = p.createVector(centerX, massYPixel - massSize/2);
+        drawRobustZigZagSpring(springStartVec, springEndVec, 14, 20);
 
-        // 4. Gambar Massa (Kotak Biru)
-        p.fill(0, 86, 179); // Warna Biru
-        p.stroke(0, 50, 100);
-        p.strokeWeight(2);
-        // Ukuran massa divisualisasikan sedikit berubah berdasarkan input massa (opsional)
-        let drawnSize = massRadius + (m * 3); 
-        p.rect(centerX, massYPixel, drawnSize, drawnSize, 5);
+        // Gambar Massa
+        p.fill(0, 86, 179); p.stroke(0, 40, 90); p.strokeWeight(2);
+        p.rect(centerX, massYPixel, massSize, massSize, 8);
 
         // Label
-        p.fill(0); p.noStroke(); p.textAlign(p.CENTER);
-        p.text("Setimbang", centerX, originY + 15);
+        p.fill(100); p.noStroke(); p.textAlign(p.CENTER);
+        p.text("Posisi Setimbang (x=0)", centerX, originY + 20);
     }
 
-    // Fungsi Helper: Menggambar garis zig-zag untuk pegas
-    function drawZigZagSpring(start, end, segments, width) {
-        let direction = p5.Vector.sub(end, start);
-        let len = direction.mag();
-        let segmentLen = len / segments;
-        direction.normalize();
-        
-        // Vektor tegak lurus untuk zig-zag
-        let perpendicular = p.createVector(-direction.y, direction.x).mult(width / 2);
+    // Fungsi Zig-Zag yang Lebih Kuat (Robust)
+    function drawRobustZigZagSpring(start, end, segments, width) {
+        let dist = p5.Vector.dist(start, end);
+        // Jika jarak terlalu dekat, gambar garis lurus saja untuk mencegah glitch
+        if (dist < segments * 2) { 
+            p.line(start.x, start.y, end.x, end.y);
+            return;
+        }
+
+        let dir = p5.Vector.sub(end, start).normalize();
+        // Vektor tegak lurus untuk offset kiri/kanan
+        let perp = p.createVector(-dir.y, dir.x).mult(width / 2);
+        let step = p5.Vector.sub(end, start).div(segments);
 
         p.beginShape();
         p.vertex(start.x, start.y);
         for (let i = 1; i < segments; i++) {
-            let pos = p5.Vector.add(start, p5.Vector.mult(direction, i * segmentLen));
-            // Zig-zag kiri kanan
-            if (i % 2 === 0) pos.add(perpendicular);
-            else pos.sub(perpendicular);
+            let pos = p5.Vector.add(start, p5.Vector.mult(step, i));
+            // Selang-seling tambah/kurang vektor tegak lurus
+            if (i % 2 === 0) pos.add(perp);
+            else pos.sub(perp);
             p.vertex(pos.x, pos.y);
         }
         p.vertex(end.x, end.y);
         p.endShape();
     }
 
-
-    // Fungsi: Menggambar Grafik Gelombang Harmonis (Bagian Kanan)
     function drawWaveGraph() {
-        let graphOriginX = p.width * 0.75; // Pusat X area kanan
-        let graphTop = 50;
-        let graphBottom = p.height - 50;
-        let graphHeight = graphBottom - graphTop;
+        let graphStartX = p.width * 0.45;
+        let graphEndX = p.width - 20;
+        let graphCenterY = originY;
 
-        // 1. Simpan data posisi saat ini ke array jejak
-        // Kita mapping posisi X meter ke koordinat Y grafik
-        // Nilai positif X (atas) dipetakan ke Y negatif (atas kanvas)
-        let mappedY = p.map(currentX, -A, A, graphBottom, graphTop);
+        // Simpan data posisi untuk grafik
+        // Mapping: Simpangan positif (A) -> Y lebih kecil (atas kanvas)
+        let mappedY = p.map(currentX, -A*1.5, A*1.5, graphCenterY + 100, graphCenterY - 100);
         
-        // Dorong data baru ke depan array (agar yang lama tergeser ke belakang)
-        wavePath.unshift(mappedY);
-        
-        // Hapus data yang terlalu lama agar tidak berat
-        if (wavePath.length > MAX_WAVE_PATH) {
-            wavePath.pop();
+        if (!isPaused || wavePath.length === 0) {
+             wavePath.unshift(mappedY);
         }
+        if (wavePath.length > MAX_WAVE_PATH) wavePath.pop();
 
-        // 2. Gambar Sumbu Grafik
+        // Gambar Sumbu
         p.stroke(150); p.strokeWeight(1);
-        // Sumbu Y (Vertikal - Posisi)
-        p.line(graphOriginX, graphTop - 20, graphOriginX, graphBottom + 20);
-        // Sumbu X (Horizontal - Waktu/Titik tengah)
-        let graphCenterY = (graphTop + graphBottom) / 2;
-        p.line(p.width/2 + 20, graphCenterY, p.width - 20, graphCenterY);
+        p.line(graphStartX, graphCenterY, graphEndX, graphCenterY); // Sumbu t
+        p.line(graphStartX + 20, graphCenterY - 120, graphStartX + 20, graphCenterY + 120); // Sumbu x
 
-        // Label Sumbu
-        p.fill(100); p.noStroke(); p.textAlign(p.CENTER, p.CENTER);
-        p.text("Posisi (x)", graphOriginX, graphTop - 30);
-        p.text("Waktu (t)", p.width - 40, graphCenterY + 15);
+        p.fill(100); p.noStroke();
+        p.text("Waktu (t)", graphEndX - 30, graphCenterY + 20);
+        p.text("Posisi (x)", graphStartX + 30, graphCenterY - 130);
 
-        // 3. Gambar Jejak Gelombang
-        p.noFill();
-        p.stroke(220, 50, 50); // Warna Merah untuk gelombang
-        p.strokeWeight(2);
-        
+        // Gambar Grafik Gelombang
+        p.noFill(); p.stroke(220, 50, 50); p.strokeWeight(2);
         p.beginShape();
-        // Iterasi array jejak untuk menggambar garis
         for (let i = 0; i < wavePath.length; i++) {
-            // X bergerak ke kiri seiring waktu (i bertambah)
-            let xCoord = graphOriginX - i; 
-            // Y diambil dari data yang sudah dimapping
-            let yCoord = wavePath[i];
-            
-            // Berhenti menggambar jika keluar dari area grafik kiri
-            if (xCoord < p.width/2 + 20) break; 
-            
-            p.vertex(xCoord, yCoord);
+            let xCoord = (graphStartX + 20) + i * 1.5; // Jarak horizontal antar titik
+            if (xCoord > graphEndX) break;
+            p.vertex(xCoord, wavePath[i]);
         }
         p.endShape();
 
-        // Gambar titik merah di ujung grafik (posisi saat ini)
+        // Titik indikator saat ini
         if (wavePath.length > 0) {
+            let currentGraphX = graphStartX + 20;
+            let currentGraphY = wavePath[0];
             p.fill(220, 50, 50); p.noStroke();
-            p.circle(graphOriginX, wavePath[0], 8);
-            
-            // Garis bantu visual dari massa ke grafik
-            p.stroke(200, 50, 50, 100); // Merah transparan
+            p.circle(currentGraphX, currentGraphY, 10);
+
+            // Garis penghubung visual
+            p.stroke(220, 50, 50, 100); p.strokeWeight(1);
             p.drawingContext.setLineDash([2, 4]);
-            let massYPixel = originY - (currentX * SCALE_PIXELS); 
-            p.line(p.width/4 + 30, massYPixel, graphOriginX, wavePath[0]);
+            let massYPixel = originY - (currentX * SCALE_PIXELS);
+            p.line(p.width * 0.2 + massSize/2, massYPixel, currentGraphX, currentGraphY);
             p.drawingContext.setLineDash([]);
         }
     }
+
+    // Fungsi untuk menangani resize window agar responsif
+    p.windowResized = () => {
+        // Opsional: sesuaikan ukuran kanvas jika window berubah, terutama saat keluar fullscreen
+        // p.resizeCanvas(p.windowWidth * 0.7, p.windowHeight * 0.7); 
+        // originY = p.height / 2; 
+    }
 };
 
-// Inisialisasi p5.js
 new p5(springSim);
