@@ -1,0 +1,115 @@
+---
+layout: default
+title: Dinamika Melingkar
+---
+
+<article class="physics-article">
+  <h1>Dinamika Melingkar</h1>
+  
+  <p>
+    Dinamika melingkar mempelajari mosi benda yang menempuh lintasan berbentuk lingkaran. Berbeda dengan gerak lurus, posisi benda dalam dinamika melingkar lebih efisien dinyatakan dalam sistem koordinat polar dibandingkan kartesian karena adanya simetri rotasi.
+  </p>
+
+  <hr>
+
+  <h2>1. Koordinat Kartesian vs Koordinat Polar</h2>
+  <p>
+    Dalam dua dimensi, posisi benda ($P$) dapat dinyatakan dalam dua cara:
+  </p>
+  <ul>
+    <li><strong>Kartesian ($x, y$):</strong> Menentukan posisi berdasarkan jarak horizontal dan vertikal dari titik asal.</li>
+    <li><strong>Polar ($r, \theta$):</strong> Menentukan posisi berdasarkan jarak radial ($r$) dari pusat dan sudut ($\theta$) yang dibentuk terhadap sumbu horizontal.</li>
+  </ul>
+  <div class="equation">
+    $$x = r \cos \theta \quad , \quad y = r \sin \theta$$
+    $$r = \sqrt{x^2 + y^2} \quad , \quad \theta = \arctan\left(\frac{y}{x}\right)$$
+  </div>
+
+  <h2>2. Kinematika Melingkar: Kecepatan dan Percepatan</h2>
+  
+  <h3>A. Besaran Angular (Sudut)</h3>
+  <ul>
+    <li><strong>Posisi Angular ($\theta$):</strong> Sudut yang ditempuh (radian).</li>
+    <li><strong>Kecepatan Angular ($\omega$):</strong> Laju perubahan posisi angular terhadap waktu ($rad/s$). $$\omega = \frac{d\theta}{dt}$$</li>
+    <li><strong>Percepatan Angular ($\alpha$):</strong> Laju perubahan kecepatan angular ($rad/s^2$). $$\alpha = \frac{d\omega}{dt}$$</li>
+  </ul>
+
+  <h3>B. Besaran Linear dan Tangensial</h3>
+  <ul>
+    <li><strong>Kecepatan Linear/Tangensial ($v$):</strong> Kecepatan benda yang arahnya selalu menyinggung lintasan lingkaran.</li>
+    <li><strong>Percepatan Tangensial ($a_t$):</strong> Percepatan yang mengubah besar kecepatan linear.</li>
+    <li><strong>Percepatan Centripetal ($a_c$):</strong> Percepatan yang mengubah arah gerak benda menuju pusat lingkaran.</li>
+  </ul>
+
+  <h2>3. Hubungan Besaran Linear dan Angular</h2>
+  <p>Besaran linear pada busur lingkaran berhubungan langsung dengan besaran angular melalui jari-jari ($r$):</p>
+  <div class="equation">
+    $$s = \theta \cdot r$$
+    $$v = \omega \cdot r$$
+    $$a_t = \alpha \cdot r$$
+  </div>
+
+  <h2>4. Gaya Sentripetal</h2>
+  <p>
+    Berdasarkan Hukum II Newton, agar benda tetap bergerak melingkar, diperlukan gaya yang arahnya menuju pusat lingkaran. Gaya ini disebut gaya sentripetal ($F_c$):
+  </p>
+  <div class="equation">
+    $$F_c = m \cdot a_c = m \frac{v^2}{r} = m \omega^2 r$$
+  </div>
+
+  <h2>5. Gerak Harmonis Sederhana (GHS) pada Gerak Melingkar</h2>
+  <p>
+    Gerak Harmonik Sederhana dapat dipandang sebagai proyeksi dari gerak melingkar beraturan pada salah satu sumbu diameter (misal sumbu $x$). Jika sebuah benda bergerak melingkar dengan kecepatan sudut tetap $\omega$, maka posisi proyeksinya memenuhi:
+  </p>
+  <div class="equation">
+    $$x(t) = A \cos(\omega t + \phi)$$
+  </div>
+  <p>Di mana radius lingkaran ($r$) menjadi Amplitudo ($A$) dalam gerak harmonis tersebut.</p>
+
+  <h2>6. Energi Mekanik pada Dinamika Melingkar</h2>
+  <p>
+    Pada benda yang berotasi, energi kinetik dinyatakan dalam bentuk energi kinetik rotasi ($K_{rot}$), yang melibatkan momen inersia ($I$):
+  </p>
+  <div class="equation">
+    $$E_m = K_{trans} + K_{rot} + U$$
+    $$E_m = \frac{1}{2}mv^2 + \frac{1}{2}I\omega^2 + mgh$$
+  </div>
+
+  <hr>
+
+  <section class="variables-summary">
+    <h3>Daftar Variabel Terkait</h3>
+    <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+      <tr style="background: var(--hover-bg);">
+        <th style="padding: 10px; border: 1px solid var(--border-color);">Variabel</th>
+        <th style="padding: 10px; border: 1px solid var(--border-color);">Simbol</th>
+        <th style="padding: 10px; border: 1px solid var(--border-color);">Satuan (SI)</th>
+      </tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Kecepatan Angular</td><td style="text-align:center;">$\omega$</td><td style="text-align:center;">rad/s</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Percepatan Angular</td><td style="text-align:center;">$\alpha$</td><td style="text-align:center;">rad/s²</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Kecepatan Tangensial</td><td style="text-align:center;">$v$</td><td style="text-align:center;">m/s</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Gaya Sentripetal</td><td style="text-align:center;">$F_c$</td><td style="text-align:center;">N</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Momen Inersia</td><td style="text-align:center;">$I$</td><td style="text-align:center;">kg·m²</td></tr>
+    </table>
+  </section>
+
+  <section class="references">
+    <h3>Referensi Ilmiah</h3>
+    <ul>
+      <li>Halliday, D., Resnick, R., & Walker, J. (2014). <em>Fundamentals of Physics</em> (10th ed.). John Wiley & Sons.</li>
+      <li>Serway, R. A., & Jewett, J. W. (2018). <em>Physics for Scientists and Engineers</em>. Cengage Learning.</li>
+    </ul>
+  </section>
+</article>
+
+<style>
+  .variables-summary th { color: var(--primary-blue); }
+  .equation {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    border-left: 5px solid var(--primary-blue);
+  }
+</style>
