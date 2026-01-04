@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulasi Pegas Harmonik Sederhana</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f2f5;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 20px;
+    }
+    h2 { color: #0056b3; margin-bottom: 10px; }
+    
+    /* Layout Utama */
+    .main-container {
+        display: flex;
+        gap: 20px;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        max-width: 1000px;
+        width: 100%;
+    }
+
+    /* Area Kanvas */
+    #canvas-container {
+        flex: 2;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        /* Kanvas p5.js akan masuk ke sini */
+    }
+
+    /* Area Kontrol dan Output */
+    .controls-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .input-group, .output-group {
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+    }
+
+    .input-group h3, .output-group h3 {
+        margin-top: 0;
+        color: #444;
+        font-size: 1.1rem;
+        border-bottom: 2px solid #0056b3;
+        padding-bottom: 8px;
+        display: inline-block;
+    }
+
+    label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+
+    input[type="range"] { flex: 1; margin: 0 10px; accent-color: #0056b3; }
+    .val-display { font-family: monospace; color: #0056b3; font-weight: bold; }
+
+    .output-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        padding-bottom: 4px;
+        border-bottom: 1px dotted #ccc;
+    }
+    .output-label { color: #666; }
+    .output-val { font-family: monospace; font-weight: bold; }
+
+  </style>
+</head>
+<body>
+
+  <h2>Simulasi Gerak Harmonik Pegas</h2>
+
+  <div class="main-container">
+      <div id="canvas-container"></div>
+
+      <div class="controls-panel">
+          
+          <div class="input-group">
+              <h3>Variabel Bebas (Input)</h3>
+              
+              <label>
+                  <span>Konstanta Pegas (k):</span>
+                  <input type="range" id="kInput" min="1" max="50" value="10" step="1">
+                  <span id="kVal" class="val-display">10 N/m</span>
+              </label>
+
+              <label>
+                  <span>Massa Beban (m):</span>
+                  <input type="range" id="mInput" min="0.5" max="10" value="2" step="0.5">
+                  <span id="mVal" class="val-display">2.0 kg</span>
+              </label>
+
+              <label>
+                  <span>Simpangan Awal (A):</span>
+                  <input type="range" id="aInput" min="0.5" max="3" value="2" step="0.1">
+                  <span id="aVal" class="val-display">2.0 m</span>
+              </label>
+          </div>
+
+          <div class="output-group">
+              <h3>Variabel Terikat (Output)</h3>
+              
+              <div class="output-item"><span class="output-label">Periode (T):</span> <span id="tOut" class="output-val">0.00 s</span></div>
+              <div class="output-item"><span class="output-label">Frekuensi (f):</span> <span id="fOut" class="output-val">0.00 Hz</span></div>
+              <div class="output-item" style="color:blue;"><span class="output-label">Energi Potensial (PE):</span> <span id="peOut" class="output-val">0.00 J</span></div>
+              <div class="output-item" style="color:red;"><span class="output-label">Energi Kinetik (KE):</span> <span id="keOut" class="output-val">0.00 J</span></div>
+              <div class="output-item" style="border-top: 2px solid #ddd; padding-top:5px;"><span class="output-label">Total Energi (E):</span> <span id="teOut" class="output-val">0.00 J</span></div>
+              <br>
+              <div class="output-item"><span class="output-label">Posisi Sesaat (x):</span> <span id="xOut" class="output-val">0.00 m</span></div>
+              <div class="output-item"><span class="output-label">Kecepatan Sesaat (v):</span> <span id="vOut" class="output-val">0.00 m/s</span></div>
+          </div>
+
+      </div>
+  </div>
+
+  <script src="dinamika-harmonik.js"></script>
+</body>
+</html>
