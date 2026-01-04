@@ -1,0 +1,105 @@
+---
+layout: default
+title: Dinamika Harmonis
+---
+
+<article class="physics-article">
+  <h1>Dinamika Harmonis Sederhana</h1>
+  
+  <p>
+    Gerak Harmonik Sederhana (GHS) adalah gerak periodik bolak-balik melalui titik setimbang yang disebabkan oleh gaya pemulih yang besarnya sebanding dengan simpangannya. Fenomena ini merupakan dasar bagi banyak sistem fisik, mulai dari getaran atom hingga ayunan jembatan.
+  </p>
+
+  <hr>
+
+  <h2>1. Kinematika Gerak Harmonik</h2>
+  <p>
+    Posisi benda dalam GHS sebagai fungsi waktu ($t$) dinyatakan dalam fungsi sinus atau kosinus. Hal ini menunjukkan bahwa gerakan tersebut berlangsung secara kontinu dan berulang.
+  </p>
+
+  
+
+[Image of Simple Harmonic Motion displacement-time graph]
+
+
+  <h3>A. Simpangan ($x$)</h3>
+  <div class="equation">
+    $$x(t) = A \cos(\omega t + \phi)$$
+  </div>
+  
+  <h3>B. Kecepatan ($v$)</h3>
+  <p>Diturunkan dari turunan pertama simpangan terhadap waktu:</p>
+  <div class="equation">
+    $$v(t) = \frac{dx}{dt} = -A\omega \sin(\omega t + \phi)$$
+  </div>
+  
+  <h3>C. Percepatan ($a$)</h3>
+  <p>Diturunkan dari turunan kedua simpangan terhadap waktu:</p>
+  <div class="equation">
+    $$a(t) = \frac{dv}{dt} = -A\omega^2 \cos(\omega t + \phi) = -\omega^2 x$$
+  </div>
+
+  <h2>2. Analisis Energi pada Gerak Harmonis</h2>
+  <p>
+    Dalam sistem harmonis ideal tanpa gesekan, terjadi pertukaran energi secara terus-menerus antara energi kinetik dan energi potensial, namun total energi mekaniknya tetap konstan.
+  </p>
+
+  
+
+  <h3>A. Energi Potensial ($U$)</h3>
+  <p>Energi yang tersimpan akibat posisi benda terhadap titik setimbang:</p>
+  <div class="equation">
+    $$U = \frac{1}{2} k x^2 = \frac{1}{2} m \omega^2 x^2$$
+  </div>
+
+  <h3>B. Energi Kinetik ($K$)</h3>
+  <p>Energi yang dimiliki benda karena gerakannya:</p>
+  <div class="equation">
+    $$K = \frac{1}{2} m v^2 = \frac{1}{2} k (A^2 - x^2)$$
+  </div>
+
+  <h3>C. Energi Mekanik Total ($E_m$)</h3>
+  <p>Jumlah dari energi potensial dan kinetik. Nilainya selalu tetap di setiap posisi:</p>
+  <div class="equation">
+    $$E_m = U + K = \frac{1}{2} k A^2$$
+  </div>
+
+  <hr>
+
+  <section class="variables-summary">
+    <h3>Daftar Variabel Terkait</h3>
+    <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+      <tr style="background: var(--hover-bg);">
+        <th style="padding: 10px; border: 1px solid var(--border-color);">Variabel</th>
+        <th style="padding: 10px; border: 1px solid var(--border-color);">Simbol</th>
+        <th style="padding: 10px; border: 1px solid var(--border-color);">Satuan (SI)</th>
+      </tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Amplitudo (Simpangan Maksimum)</td><td style="text-align:center;">$A$</td><td style="text-align:center;">m</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Frekuensi Sudut</td><td style="text-align:center;">$\omega$</td><td style="text-align:center;">rad/s</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Fase Awal</td><td style="text-align:center;">$\phi$</td><td style="text-align:center;">rad</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Energi Mekanik</td><td style="text-align:center;">$E_m$</td><td style="text-align:center;">Joule (J)</td></tr>
+      <tr><td style="padding: 8px; border: 1px solid var(--border-color);">Konstanta Gaya</td><td style="text-align:center;">$k$</td><td style="text-align:center;">N/m</td></tr>
+    </table>
+  </section>
+
+  <section class="references">
+    <h3>Referensi Ilmiah</h3>
+    <ul>
+      <li>French, A. P. (1971). <em>Vibrations and Waves</em>. MIT Introductory Physics Series.</li>
+      <li>Thornton, S. T., & Marion, J. B. (2004). <em>Classical Dynamics of Particles and Systems</em>.</li>
+    </ul>
+  </section>
+</article>
+
+<style>
+  .variables-summary th { color: var(--primary-blue); }
+  .equation {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    border-left: 5px solid var(--primary-blue);
+    overflow-x: auto;
+  }
+</style>
