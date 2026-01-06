@@ -1,33 +1,104 @@
 // File: assets/js/simulations/whiteboard.js
 
-// Membuat fungsi instance p5.js untuk Whiteboard
 let whiteboard = (p) => {
-  let canvasWidth = 600;
-  let canvasHeight = 400;
+  let canvasWidth = 800;
+  let canvasHeight = 500;
+  let currentColor = '#000000'; // Default hitam
+  let penSize = 3;
+  let isEraser = false;
+
+  // Stacks untuk Undo dan Redo
+  let history = [];
+  let redoStack = [];
 
   p.setup = () => {
-    // Memasukkan kanvas ke div id="whiteboard-canvas-holder"
     let canvas = p.createCanvas(canvasWidth, canvasHeight);
     canvas.parent('whiteboard-canvas-holder');
-    p.background(255); // Latar belakang putih bersih
+    p.background(255);
+    
+    // Simpan keadaan awal (kanvas kosong) ke history
+    saveState();
   };
 
   p.draw = () => {
-    // Fungsi draw kosong, hanya digunakan untuk menerima input mouse
+    // Kursor berubah jadi lingkaran jika penghapus aktif
+    if (p.mouseX > 0 && p.mouseX < p.width && p.mouseY > 0 && p.mouseY < p.height) {
+      if (isEraser) {
+        p.cursor(p.CROSS);
+      } else {
+        p.cursor(p.ARROW);
+      }
+    }
   };
 
   p.mouseDragged = () => {
-    // Menggambar garis yang mengikuti gerakan mouse
-    p.stroke(0); // Warna hitam
-    p.strokeWeight(3); // Ketebalan
+    if (isEraser) {
+      p.stroke(255); // Warna putih untuk menghapus
+      p.strokeWeight(20);
+    } else {
+      p.stroke(currentColor);
+      p.strokeWeight(penSize);
+    }
     p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
   };
-  
-  // Fungsi ini dipanggil dari tombol 'Clear Whiteboard' di HTML
+
+  // Simpan state saat mouse dilepas (selesai satu tarikan garis)
+  p.mouseReleased = () => {
+    if (p.mouseX > 0 && p.mouseX < p.width && p.mouseY > 0 && p.mouseY < p.height) {
+      saveState();
+    }
+  };
+
+  // --- Fungsi Kontrol ---
+
+  function saveState() {
+    // Ambil gambar kanvas saat ini dan simpan ke history
+    history.push(p.get());
+    // Batasi history agar tidak terlalu berat (misal 20 langkah)
+    if (history.length > 21) history.shift();
+    // Kosongkan redo setiap ada aksi baru
+    redoStack = [];
+  }
+
+  window.setPenColor = (color) => {
+    isEraser = false;
+    currentColor = color;
+  };
+
+  window.useEraser = () => {
+    isEraser = true;
+  };
+
+  window.undo = () => {
+    if (history.length > 1) {
+      redoStack.push(history.pop()); // Pindahkan state sekarang ke redo
+      let previousState = history[history.length - 1];
+      p.image(previousState, 0, 0); // Gambar ulang state sebelumnya
+    }
+  };
+
+  window.redo = () => {
+    if (redoStack.length > 0) {
+      let nextState = redoStack.pop();
+      history.push(nextState);
+      p.image(nextState, 0, 0);
+    }
+  };
+
   window.clearWhiteboard = () => {
-    p.background(255); // Mengisi ulang kanvas dengan warna putih
+    p.background(255);
+    saveState();
+  };
+
+  window.toggleFullscreen = () => {
+    let fs = p.fullscreen();
+    p.fullscreen(!fs);
+    if (!fs) {
+      p.resizeCanvas(p.windowWidth, p.windowHeight);
+    } else {
+      p.resizeCanvas(canvasWidth, canvasHeight);
+    }
   };
 };
 
-// Menginisialisasi instance Whiteboard
 let myWhiteboard = new p5(whiteboard);
