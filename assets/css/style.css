@@ -173,6 +173,10 @@ a:hover {
     text-decoration: none; /* Menghilangkan underline khusus submenu */
 }
 
+.red-text {
+  color: red;
+}
+
 /* ============================================================
    6. SIMULATION COMPONENTS
    ============================================================ */
