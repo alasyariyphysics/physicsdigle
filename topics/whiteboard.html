@@ -85,42 +85,44 @@
 
     <h2 style="color: #333; margin-top: 0;">Digital Whiteboard</h2>
 
-    <div class="toolbar">
-        <div class="section">
-            <div class="color-btn" style="background: #000000;" onclick="setPenColor('#000000')" title="Hitam"></div>
-            <div class="color-btn" style="background: #ef4444;" onclick="setPenColor('#ef4444')" title="Merah"></div>
-            <div class="color-btn" style="background: #3b82f6;" onclick="setPenColor('#3b82f6')" title="Biru"></div>
-            <div class="color-btn" style="background: #22c55e;" onclick="setPenColor('#22c55e')" title="Hijau"></div>
+    <div class="simulation-container">
+        <div class="toolbar">
+            <div class="section">
+                <div class="color-btn" style="background: #000000;" onclick="setPenColor('#000000')" title="Hitam"></div>
+                <div class="color-btn" style="background: #ef4444;" onclick="setPenColor('#ef4444')" title="Merah"></div>
+                <div class="color-btn" style="background: #3b82f6;" onclick="setPenColor('#3b82f6')" title="Biru"></div>
+                <div class="color-btn" style="background: #22c55e;" onclick="setPenColor('#22c55e')" title="Hijau"></div>
+            </div>
+    
+            <div class="divider"></div>
+    
+            <div class="section">
+                <span class="thickness-label">Size:</span>
+                <input type="range" min="1" max="50" value="3" oninput="changeSize(this.value)">
+                <span id="size-val" style="font-size: 12px; min-width: 20px;">3</span>
+            </div>
+    
+            <div class="divider"></div>
+    
+            <div class="section">
+                <button onclick="useEraser()">🧽 Eraser</button>
+                <button onclick="undo()">↩️ Undo</button>
+                <button onclick="redo()">↪️ Redo</button>
+            </div>
+    
+            <div class="divider"></div>
+    
+            <div class="section">
+                <button class="btn-danger" onclick="clearWhiteboard()">🗑️ Clear</button>
+                <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
+                <button style="background: #e0f2fe;" onclick="saveImage()">💾 Save</button>
+            </div>
         </div>
+    
+        <div id="whiteboard-canvas-holder"></div>
+</div>
 
-        <div class="divider"></div>
-
-        <div class="section">
-            <span class="thickness-label">Size:</span>
-            <input type="range" min="1" max="50" value="3" oninput="changeSize(this.value)">
-            <span id="size-val" style="font-size: 12px; min-width: 20px;">3</span>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section">
-            <button onclick="useEraser()">🧽 Eraser</button>
-            <button onclick="undo()">↩️ Undo</button>
-            <button onclick="redo()">↪️ Redo</button>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section">
-            <button class="btn-danger" onclick="clearWhiteboard()">🗑️ Clear</button>
-            <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
-            <button style="background: #e0f2fe;" onclick="saveImage()">💾 Save</button>
-        </div>
-    </div>
-
-    <div id="whiteboard-canvas-holder"></div>
-
-    <script src="../assets/js/simulations/whiteboard.js"></script>
+    <script src="{{ site.baseurl }}/assets/js/simulations/whiteboard.js"></script>
 
     <script>
         // Helper function untuk update UI slider
