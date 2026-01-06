@@ -138,6 +138,16 @@ a:hover {
     text-decoration: none; /* Menghilangkan underline khusus sidebar */
 }
 
+/* Warna merah khusus untuk teks Relativitas */
+#project-sidebar li .collapsible.text-red {
+    color: #d9534f; /* Menggunakan variabel --primary-red Anda */
+}
+
+/* Tetap merah saat di-hover atau saat aktif */
+#project-sidebar li .collapsible.text-red:hover {
+    color: #b0433f; /* Warna merah yang sedikit lebih gelap saat hover */
+}
+
 /* --- Submenu (Child) --- */
 .sub-menu { 
     display: none; 
@@ -171,10 +181,6 @@ a:hover {
     background: #fff5f5;
     padding-left: 50px;
     text-decoration: none; /* Menghilangkan underline khusus submenu */
-}
-
-.red-text {
-  color: red;
 }
 
 /* ============================================================
