@@ -1,135 +1,103 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whiteboard Digital Pro</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
-    
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f8f9fa;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 20px;
-        }
+---
+layout: default
+title: Digital Whiteboard
+---
 
-        .toolbar {
-            background: #ffffff;
-            padding: 10px 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            border: 1px solid #e0e0e0;
-        }
-
-        .section {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Color Circle Buttons */
-        .color-btn {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .color-btn:hover { transform: scale(1.1); }
-        .color-btn.active { border-color: #000; }
-
-        /* General Button Styles */
-        button {
-            padding: 6px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background: #fff;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        button:hover { background: #f0f0f0; }
-        button:active { background: #e0e0e0; }
-
-        .btn-danger { background: #fee2e2; color: #dc2626; border-color: #fecaca; }
-        .btn-danger:hover { background: #fecaca; }
-
-        /* Slider Styles */
-        .thickness-label { font-size: 13px; font-weight: 600; color: #666; }
-        input[type=range] { width: 80px; cursor: pointer; }
-
-        #whiteboard-canvas-holder {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #fff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-
-        .divider { width: 1px; height: 24px; background: #ddd; }
-    </style>
-</head>
-<body>
-
-    <h2 style="color: #333; margin-top: 0;">Digital Whiteboard</h2>
-
-    <div class="simulation-container">
-        <div class="toolbar">
-            <div class="section">
-                <div class="color-btn" style="background: #000000;" onclick="setPenColor('#000000')" title="Hitam"></div>
-                <div class="color-btn" style="background: #ef4444;" onclick="setPenColor('#ef4444')" title="Merah"></div>
-                <div class="color-btn" style="background: #3b82f6;" onclick="setPenColor('#3b82f6')" title="Biru"></div>
-                <div class="color-btn" style="background: #22c55e;" onclick="setPenColor('#22c55e')" title="Hijau"></div>
-            </div>
-    
-            <div class="divider"></div>
-    
-            <div class="section">
-                <span class="thickness-label">Size:</span>
-                <input type="range" min="1" max="50" value="3" oninput="changeSize(this.value)">
-                <span id="size-val" style="font-size: 12px; min-width: 20px;">3</span>
-            </div>
-    
-            <div class="divider"></div>
-    
-            <div class="section">
-                <button onclick="useEraser()">🧽 Eraser</button>
-                <button onclick="undo()">↩️ Undo</button>
-                <button onclick="redo()">↪️ Redo</button>
-            </div>
-    
-            <div class="divider"></div>
-    
-            <div class="section">
-                <button class="btn-danger" onclick="clearWhiteboard()">🗑️ Clear</button>
-                <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
-                <button style="background: #e0f2fe;" onclick="saveImage()">💾 Save</button>
-            </div>
-        </div>
-    
-        <div id="whiteboard-canvas-holder"></div>
+<div class="hero-section" style="padding: 20px 0;">
+    <h1>Digital Whiteboard</h1>
+    <p class="lead-text">Gunakan papan tulis ini untuk menghitung, mencoret konsep, atau menyimpan catatan belajar Anda.</p>
 </div>
 
-    <script src="{{ site.baseurl }}/assets/js/simulations/whiteboard.js"></script>
+<div class="simulation-container">
+    <div class="toolbar">
+        <div class="section">
+            <div class="color-btn active" style="background: #000000;" onclick="handleColorChange('#000000', this)" title="Hitam"></div>
+            <div class="color-btn" style="background: #ef4444;" onclick="handleColorChange('#ef4444', this)" title="Merah"></div>
+            <div class="color-btn" style="background: #3b82f6;" onclick="handleColorChange('#3b82f6', this)" title="Biru"></div>
+            <div class="color-btn" style="background: #22c55e;" onclick="handleColorChange('#22c55e', this)" title="Hijau"></div>
+        </div>
 
-    <script>
-        // Helper function untuk update UI slider
-        function changeSize(val) {
-            document.getElementById('size-val').innerText = val;
-            window.setPenSize(val);
-        }
-    </script>
-</body>
-</html>
+        <div class="divider"></div>
+
+        <div class="section">
+            <span class="thickness-label">Size:</span>
+            <input type="range" min="1" max="50" value="3" oninput="changeSize(this.value)">
+            <span id="size-val" style="font-size: 12px; min-width: 20px;">3</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <button onclick="useEraser()">🧽 Eraser</button>
+            <button onclick="undo()">↩️ Undo</button>
+            <button onclick="redo()">↪️ Redo</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <button class="btn-danger" onclick="clearWhiteboard()">🗑️ Clear</button>
+            <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
+            <button style="background: #e0f2fe;" onclick="saveImage()">💾 Save</button>
+        </div>
+    </div>
+
+    <div id="whiteboard-canvas-holder"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+<script src="{{ site.baseurl }}/assets/js/simulations/whiteboard.js"></script>
+
+<script>
+    function changeSize(val) {
+        document.getElementById('size-val').innerText = val;
+        if(window.setPenSize) window.setPenSize(val);
+    }
+
+    function handleColorChange(color, el) {
+        // Hapus class active dari semua tombol warna
+        document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+        // Tambah class active ke tombol yang diklik
+        el.classList.add('active');
+        if(window.setPenColor) window.setPenColor(color);
+    }
+</script>
+
+<style>
+    /* Tambahan Style untuk Whiteboard Page agar rapi */
+    .toolbar {
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 12px;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        border: 1px solid var(--border-color);
+        margin-bottom: 20px;
+    }
+    .color-btn {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 3px solid transparent;
+        transition: 0.2s;
+    }
+    .color-btn.active { border-color: #ddd; transform: scale(1.1); }
+    .divider { width: 1px; height: 30px; background: #eee; }
+    #whiteboard-canvas-holder {
+        display: flex;
+        justify-content: center;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #ddd;
+    }
+    #whiteboard-canvas-holder canvas {
+        display: block;
+        max-width: 100%;
+        height: auto !important;
+    }
+</style>
