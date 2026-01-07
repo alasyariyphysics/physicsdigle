@@ -41,29 +41,34 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const coll = document.querySelectorAll('.collapsible');
-      coll.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const subMenu = link.nextElementSibling;
-          if (subMenu) {
-             subMenu.classList.toggle('open');
-             link.classList.toggle('active');
-          }
+      document.addEventListener('DOMContentLoaded', () => {
+        // Logika Collapsible Sidebar
+        const coll = document.querySelectorAll('.collapsible');
+        coll.forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const subMenu = link.nextElementSibling;
+            if (subMenu) {
+              subMenu.classList.toggle('open');
+              link.classList.toggle('active');
+            }
+          });
         });
+  
+        // Tambahkan elemen overlay secara dinamis saat halaman dimuat
+        document.body.insertAdjacentHTML('beforeend', '<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>');
       });
-    });
-  </script>
-  function toggleSidebar() {
-    const sidebar = document.getElementById('project-sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    
-    sidebar.classList.toggle('active');
-    overlay.classList.toggle('active');
-  }
-
-  // Tambahkan elemen overlay secara dinamis melalui JS agar bersih
-  document.body.insertAdjacentHTML('beforeend', '<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>');
+  
+      // Fungsi Toggle Sidebar (Harus di dalam tag script agar terbaca)
+      function toggleSidebar() {
+        const sidebar = document.getElementById('project-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        
+        if (sidebar && overlay) {
+          sidebar.classList.toggle('active');
+          overlay.classList.toggle('active');
+        }
+      }
+    </script>
 </body>
 </html>
