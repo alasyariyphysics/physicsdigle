@@ -55,5 +55,15 @@
       });
     });
   </script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('project-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+  }
+
+  // Tambahkan elemen overlay secara dinamis melalui JS agar bersih
+  document.body.insertAdjacentHTML('beforeend', '<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>');
 </body>
 </html>
