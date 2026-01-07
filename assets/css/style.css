@@ -196,14 +196,19 @@ a:hover {
 @media (max-width: 768px) {
     #project-sidebar {
         position: fixed;
-        left: -280px; /* Sembunyi di luar layar kiri */
+        left: -280px;          /* Sembunyi di luar layar kiri */
         top: 0;
-        height: 100%;
-        overflow-y: auto; /* Mengizinkan scroll internal pada sidebar */
+        width: 280px;          /* Pastikan lebar didefinisikan */
+        height: 100vh;         /* Gunakan vh bukan % agar scroll mouse aktif */
+        overflow-y: auto;      /* Wajib untuk scroll */
+        overflow-x: hidden;    /* Menghindari pergeseran ke samping */
         background: var(--sidebar-bg);
-        z-index: 10001;
+        z-index: 10001;        /* Harus di atas overlay */
         transition: 0.3s ease;
         box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+        
+        /* Opsional: memperhalus scroll di perangkat iOS/Sentuh */
+        -webkit-overflow-scrolling: touch; 
     }
 
     /* Saat sidebar aktif/terbuka */
