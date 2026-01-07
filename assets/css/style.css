@@ -276,6 +276,74 @@ input[type="range"] {
     vertical-align: middle;
 }
 
+/* --- Perbaikan Whiteboard Toolbar --- */
+
+/* Memastikan susunan toolbar tetap fleksibel namun teratur */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap; /* Memungkinkan elemen turun jika layar sangat kecil, kecuali grup warna */
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+/* KUNCI: Memaksa grup warna tetap horizontal */
+.color-group {
+    display: flex;
+    flex-direction: row !important; /* Paksa baris */
+    flex-wrap: nowrap !important;   /* Larang turun ke bawah */
+    gap: 10px;
+    align-items: center;
+}
+
+/* Styling tombol warna agar konsisten dengan desain web */
+.color-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+}
+
+.color-btn.active {
+    border-color: #dfe6e9; /* Memberi ring di sekitar warna aktif */
+    transform: scale(1.1);
+}
+
+/* Memastikan label dan slider sejajar */
+.section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Responsivitas untuk layar kecil/Mobile */
+@media (max-width: 600px) {
+    .toolbar {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .color-btn {
+        width: 26px; /* Mengecilkan sedikit di mobile agar muat satu baris */
+        height: 26px;
+    }
+
+    .divider {
+        display: none; /* Sembunyikan pembatas di mobile untuk ruang lebih luas */
+    }
+}
 /* ============================================================
    7. FULLSCREEN STYLING
    ============================================================ */
