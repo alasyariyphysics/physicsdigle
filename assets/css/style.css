@@ -201,7 +201,7 @@ a:hover {
         height: 100%;
         overflow-y: auto; /* Mengizinkan scroll internal pada sidebar */
         background: var(--sidebar-bg);
-        z-index: 1001;
+        z-index: 10001;
         transition: 0.3s ease;
         box-shadow: 5px 0 15px rgba(0,0,0,0.2);
     }
