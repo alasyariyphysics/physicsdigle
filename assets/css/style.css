@@ -361,3 +361,23 @@ input[type="range"] {
 /* Pendukung vendor fullscreen */
 :-webkit-full-screen#simulation-wrapper { background: white; padding: 40px; }
 :-moz-full-screen#simulation-wrapper { background: white; padding: 40px; }
+
+/* --- Perbaikan Whiteboard Fullscreen --- */
+/* Update dari #simulation-wrapper ke #whiteboard-container */
+#whiteboard-container:fullscreen {
+    background-color: white !important;
+    width: 100vw;
+    height: 100vh;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+/* Dukungan untuk browser Webkit (Chrome/Safari) */
+#whiteboard-container:-webkit-full-screen {
+    background-color: white !important;
+    padding: 30px;
+}
