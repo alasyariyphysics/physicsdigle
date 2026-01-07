@@ -39,7 +39,7 @@ title: Beranda - Physics Digital Learning
 <div class="contributors-container">
   <div class="contributor-profile">
     <img src="https://github.com/alasyariyphysics.png" alt="Lead Developer">
-    <h4>Al-Asy'ari</h4>
+    <h4>Mohammad Habib Alasy Ariy</h4>
     <span>Lead Developer</span>
   </div>
 </div>
