@@ -183,6 +183,42 @@ a:hover {
     text-decoration: none; /* Menghilangkan underline khusus submenu */
 }
 
+/* Sidebar Default (Layar Desktop) */
+#project-sidebar {
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+/* Responsif Layar Kecil (Max-width: 768px) */
+@media (max-width: 768px) {
+    #project-sidebar {
+        position: fixed;
+        left: -280px; /* Sembunyi di luar layar kiri */
+        top: 0;
+        height: 100%;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+    }
+
+    /* Saat sidebar aktif/terbuka */
+    #project-sidebar.active {
+        left: 0;
+    }
+
+    /* Overlay latar belakang gelap saat menu terbuka */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 9998;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+}
+
 /* ============================================================
    6. SIMULATION COMPONENTS
    ============================================================ */
