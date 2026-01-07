@@ -143,9 +143,12 @@ a:hover {
     color: #d9534f; /* Menggunakan variabel --primary-red Anda */
 }
 
-/* Tetap merah saat di-hover atau saat aktif */
+/* Menjaga warna merah saat menu diklik (aktif) atau di-hover */
+#project-sidebar li .collapsible.text-red.active,
 #project-sidebar li .collapsible.text-red:hover {
-    color: #b0433f; /* Warna merah yang sedikit lebih gelap saat hover */
+    color: #b0433f; /* Merah yang lebih gelap */
+    background: #fff5f5; /* Background tipis kemerahan */
+    border-left-color: var(--primary-red);
 }
 
 /* --- Submenu (Child) --- */
@@ -196,6 +199,10 @@ a:hover {
         left: -280px; /* Sembunyi di luar layar kiri */
         top: 0;
         height: 100%;
+        overflow-y: auto; /* Mengizinkan scroll internal pada sidebar */
+        background: var(--sidebar-bg);
+        z-index: 1001;
+        transition: 0.3s ease;
         box-shadow: 5px 0 15px rgba(0,0,0,0.2);
     }
 
