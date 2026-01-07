@@ -41,34 +41,46 @@
   </div>
 
   <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        // Logika Collapsible Sidebar
-        const coll = document.querySelectorAll('.collapsible');
-        coll.forEach(link => {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const subMenu = link.nextElementSibling;
-            if (subMenu) {
-              subMenu.classList.toggle('open');
-              link.classList.toggle('active');
-            }
-          });
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Logika Collapsible Sidebar
+      const coll = document.querySelectorAll('.collapsible');
+      coll.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Mencegah klik menu menutup sidebar
+          const subMenu = link.nextElementSibling;
+          if (subMenu) {
+            subMenu.classList.toggle('open');
+            link.classList.toggle('active');
+          }
         });
-  
-        // Tambahkan elemen overlay secara dinamis saat halaman dimuat
-        document.body.insertAdjacentHTML('beforeend', '<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>');
       });
   
-      // Fungsi Toggle Sidebar (Harus di dalam tag script agar terbaca)
-      function toggleSidebar() {
-        const sidebar = document.getElementById('project-sidebar');
-        const overlay = document.getElementById('sidebar-overlay');
-        
-        if (sidebar && overlay) {
-          sidebar.classList.toggle('active');
-          overlay.classList.toggle('active');
-        }
+      // 2. Cegah klik di dalam area sidebar menutup dirinya sendiri
+      const sidebar = document.getElementById('project-sidebar');
+      if (sidebar) {
+        sidebar.addEventListener('click', (e) => {
+          // Ini sangat penting agar scroll dan klik menu tidak memicu toggleSidebar
+          e.stopPropagation(); 
+        });
       }
-    </script>
+  
+      // 3. Tambahkan elemen overlay secara dinamis
+      if (!document.getElementById('sidebar-overlay')) {
+          document.body.insertAdjacentHTML('beforeend', '<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>');
+      }
+    });
+  
+    // Fungsi Toggle Sidebar
+    function toggleSidebar() {
+      const sidebar = document.getElementById('project-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      }
+    }
+  </script>
 </body>
 </html>
