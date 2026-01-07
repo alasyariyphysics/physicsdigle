@@ -112,10 +112,23 @@ let whiteboard = (p) => {
         p.saveCanvas('Catatan-Fisika-' + p.day() + p.month() + p.year(), 'png');
     };
 
-    window.toggleFullscreen = () => {
-        let fs = p.fullscreen();
-        p.fullscreen(!fs);
-    };
+   window.toggleFullscreen = () => {
+       let elem = document.getElementById("whiteboard-container");
+   
+       if (!document.fullscreenElement) {
+           if (elem.requestFullscreen) {
+               elem.requestFullscreen();
+           } else if (elem.webkitRequestFullscreen) { /* Safari */
+               elem.webkitRequestFullscreen();
+           } else if (elem.msRequestFullscreen) { /* IE11 */
+               elem.msRequestFullscreen();
+           }
+       } else {
+           if (document.exitFullscreen) {
+               document.exitFullscreen();
+           }
+       }
+   };
 
     // Menangani perubahan ukuran jendela agar kanvas tetap pas
     p.windowResized = () => {
