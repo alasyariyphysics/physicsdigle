@@ -1,0 +1,142 @@
+---
+layout: default
+title: Daftar Simulasi Fisika Interaktif
+---
+
+<style>
+  /* Container Utama */
+  .simulation-container {
+    padding: 20px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* Grid System */
+  .sim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+  }
+
+  /* Card Style */
+  .sim-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eee;
+  }
+
+  .sim-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+
+  /* Card Image Placeholder */
+  .sim-image {
+    width: 100%;
+    height: 160px;
+    background: #f0f4f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #3498db;
+    border-bottom: 2px solid #3498db;
+  }
+
+  /* Card Content */
+  .sim-content {
+    padding: 20px;
+  }
+
+  .sim-category {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #3498db;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .sim-title {
+    font-size: 1.25rem;
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+  }
+
+  .sim-description {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    line-height: 1.5;
+  }
+</style>
+
+<div class="simulation-container">
+  <h1>Laboratorium Virtual</h1>
+  <p>Pilih topik di bawah ini untuk memulai simulasi interaktif fisika.</p>
+
+  <div class="sim-grid">
+    
+    <a href="{{ site.baseurl }}/topics/gaya-magnet.html" class="sim-card">
+      <div class="sim-image">🧲</div>
+      <div class="sim-content">
+        <span class="sim-category">Elektromagnetik</span>
+        <h3 class="sim-title">Gaya Lorentz</h3>
+        <p class="sim-description">Visualisasi interaktif gaya pada muatan listrik dalam medan magnet homogen.</p>
+      </div>
+    </a>
+
+    <a href="{{ site.baseurl }}/topics/generator-listrik.html" class="sim-card">
+      <div class="sim-image">⚙️</div>
+      <div class="sim-content">
+        <span class="sim-category">Induksi</span>
+        <h3 class="sim-title">Generator AC/DC</h3>
+        <p class="sim-description">Pelajari bagaimana putaran mekanis diubah menjadi energi listrik bolak-balik.</p>
+      </div>
+    </a>
+
+    <a href="{{ site.baseurl }}/topics/difraksi-cahaya.html" class="sim-card">
+      <div class="sim-image">🌈</div>
+      <div class="sim-content">
+        <span class="sim-category">Gelombang Optik</span>
+        <h3 class="sim-title">Difraksi Celah</h3>
+        <p class="sim-description">Eksperimen celah tunggal dan kisi untuk melihat pola interferensi cahaya.</p>
+      </div>
+    </a>
+
+    <a href="{{ site.baseurl }}/topics/efek-fotolistrik.html" class="sim-card">
+      <div class="sim-image">💡</div>
+      <div class="sim-content">
+        <span class="sim-category">Fisika Modern</span>
+        <h3 class="sim-title">Efek Fotolistrik</h3>
+        <p class="sim-description">Simulasi pelepasan elektron logam akibat paparan foton cahaya.</p>
+      </div>
+    </a>
+
+    <a href="{{ site.baseurl }}/topics/fisi-nuklir.html" class="sim-card">
+      <div class="sim-image">⚛️</div>
+      <div class="sim-content">
+        <span class="sim-category">Fisika Nuklir</span>
+        <h3 class="sim-title">Reaksi Fisi</h3>
+        <p class="sim-description">Simulasi reaksi berantai pembelahan inti atom Uranium-235.</p>
+      </div>
+    </a>
+
+    <a href="{{ site.baseurl }}/topics/rangkaian-RLC.html" class="sim-card">
+      <div class="sim-image">📈</div>
+      <div class="sim-content">
+        <span class="sim-category">Elektronika</span>
+        <h3 class="sim-title">Resonansi RLC</h3>
+        <p class="sim-description">Atur nilai R, L, dan C untuk menemukan frekuensi resonansi pada rangkaian.</p>
+      </div>
+    </a>
+
+  </div>
+</div>
